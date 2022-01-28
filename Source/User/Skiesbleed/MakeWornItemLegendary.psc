@@ -62,7 +62,16 @@ bool Function CreateLegendaryWeapon(Actor akTarget)
         LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedWeapon)
         return true
     else
-        return AddLegendaryModToEquippedItem(akTarget, AllowedWeaponKeywords)
+        bool success = AddLegendaryModToEquippedItem(akTarget, AllowedWeaponKeywords)
+
+        ; If there was a chance that we could have generated a weapon and we failed to change the equipped one, generate one anyway
+        if !success && GeneratedWeaponChance.GetValueInt() > 0
+            debug.trace(self + " generating a new legendary weapon because the equipped one couldn't be made legendary")
+            LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedWeapon)
+            success = true
+        EndIf
+
+        return success
     EndIf
 EndFunction
 
