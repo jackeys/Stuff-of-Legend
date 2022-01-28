@@ -1,0 +1,1 @@
+Worn Legendary Items
