@@ -41,22 +41,24 @@ bool Function AddLegendaryModToEquippedItem(Actor akTarget)
         i += 1
     endwhile
 
-    bool success = false
-
     ; If we have at least one eligible item, randomly select one to get a legendary mod
-    int numPieces = eligibleEquipment.length
-    if numPieces > 0
-        int chosenIndex = Utility.RandomInt(0, numPieces - 1)
-        debug.trace(akTarget + "Selecting item at index " + chosenIndex + " out of " + numPieces + " total")
+    ; Keep trying until we succeed, in case the item doesn't have the proper attach point, doesn't have any allowed legendary rules, etc
+    while eligibleEquipment.length > 0
+        int chosenIndex = Utility.RandomInt(0, eligibleEquipment.length - 1)
+        debug.trace(akTarget + "Selecting item at index " + chosenIndex + " out of " + eligibleEquipment.length + " total")
         Form itemToMod = eligibleEquipment[chosenIndex]
-        success = AddLegendaryMod(akTarget, itemToMod)
-        ; Attaching a mod to an equipped weapon will prevent the actor from equipping it again, so let's make sure they are using it
-        akTarget.EquipItem(itemToMod)
-    else
-        debug.trace(akTarget + "No equipment found to attach a legendary mod to")
-    endif
-
-    return success
+        
+        if AddLegendaryMod(akTarget, itemToMod)
+            ; Attaching a mod to an equipped weapon will prevent the actor from equipping it again, so let's make sure they are using it
+            akTarget.EquipItem(itemToMod)
+            return true
+        else
+            eligibleEquipment.Remove(chosenIndex)
+        endIf
+    endWhile
+    
+    debug.trace(akTarget + "No equipment found to attach a legendary mod to")
+    return false
 EndFunction
 
 bool Function AddLegendaryMod(ObjectReference akRecipient, Form  item, FormList ListOfSpecificModsToChooseFrom = None, FormList ListOfSpecificModsToDisallow = None)
