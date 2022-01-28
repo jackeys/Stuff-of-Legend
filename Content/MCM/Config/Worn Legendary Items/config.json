@@ -47,6 +47,26 @@
                 "sourceType": "GlobalValue",
                 "sourceForm": "Worn Legendary Items.esp|007"
             }
+        },
+        {
+            "text": "Turning It Up to 11",
+            "type": "section"
+        },
+        {
+            "text": "These settings may drastically alter the game's balance or could result in enemies visually unequipping and equipping their armor shortly after you see them. They can be fun, but use at your own discretion.",
+            "type": "text"
+        },
+        {
+            "text": "Chance of normal enemies getting legendary items",
+            "type": "slider",
+            "help": "The percent chance that normal enemies will get legendary items. Useful if you are using mods that give normal and legendary enemies different equipment.",
+            "valueOptions": {
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "sourceType": "GlobalValue",
+                "sourceForm": "Worn Legendary Items.esp|008"
+            }
         }
     ]
 }
