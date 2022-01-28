@@ -1,0 +1,16 @@
+{
+    "modName": "Worn Legendary Items",
+    "displayName": "Worn Legendary Items",
+    "minMcmVersion": 1,
+    "content": [
+        {
+            "text": "Add a new legendary item if no equipment can be made legendary",
+            "type": "switcher",
+            "help": "When a legendary enemy does not have any equipment that can be made legendary, generate a legendary item like the base game would",
+            "valueOptions": {
+                "sourceType": "GlobalValue",
+                "sourceForm": "Worn Legendary Items.esp|001"
+            }
+        }
+    ]
+}
