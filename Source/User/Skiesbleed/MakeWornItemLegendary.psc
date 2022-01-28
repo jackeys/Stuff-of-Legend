@@ -4,8 +4,8 @@ Scriptname Skiesbleed:MakeWornItemLegendary extends activemagiceffect
 LegendaryItemQuestScript Property LegendaryItemQuest Auto Const Mandatory
 {AUTOFILL}
 
-GlobalVariable Property GenerateNewItemIfNoneFound Auto Const
-{If provided, this boolean global determines if a brand new item should be created from the standard legendary drop lists if there are no items in the reference's inventory that can be made legendary}
+GlobalVariable Property GenerateNewItemIfNoneFound Auto Const Mandatory
+{This boolean global determines if a brand new item should be created from the standard legendary drop lists if there are no items in the reference's inventory that can be made legendary}
 
 FormList Property AllowedWeaponKeywords Auto Const Mandatory
 {If an item has any of the keywords on this list, it will be considered to be a weapon that can have a legendary mod}
@@ -19,40 +19,60 @@ FormList Property ExcludeKeywordsList Auto Const
 GlobalVariable Property LegendaryWeaponChance Auto Const Mandatory
 {The chance that the enemy's weapon will be selected as the legendary item instead of their armor}
 
+GlobalVariable Property GeneratedWeaponChance Auto Const Mandatory
+{The chance that the enemy will get a new legendary weapon instead of changing their own}
+
+LeveledItem Property GeneratedWeapon Auto Const Mandatory
+{The weapon list to use to generate weapons if the chance is rolled}
+
 Event OnEffectStart(Actor akTarget, Actor akCaster)
-    if !AddLegendaryModToEquippedItem(akTarget) && GenerateNewItemIfNoneFound && GenerateNewItemIfNoneFound.GetValueInt() > 0
-	    LegendaryItemQuest.GenerateLegendaryItem(akTarget)
-    EndIf
+    CreateLegendaryItem(akTarget)
 EndEvent
 
-bool Function AddLegendaryModToEquippedItem(Actor akTarget)
+Function CreateLegendaryItem(Actor akTarget)
     bool success = false
 
-    if Utility.RandomInt(0, 100) > LegendaryWeaponChance.GetValueInt()
-        debug.trace(self + " is going to make legendary armor")
-        success = AddLegendaryModToEquippedItemWithKeyword(akTarget, AllowedArmorKeywords)
-
-        if !success
-            debug.trace(self + " falling back to a legendary weapon because making legendary armor failed")
-            success = AddLegendaryModToEquippedItemWithKeyword(akTarget, AllowedWeaponKeywords)
-        EndIf
-    else
-        debug.trace(self + " is going to make a legendary weapon")
-        success = AddLegendaryModToEquippedItemWithKeyword(akTarget, AllowedWeaponKeywords)
-
+    if Utility.RandomInt(1, 100) <= LegendaryWeaponChance.GetValueInt()
+        success = CreateLegendaryWeapon(akTarget)
+        
         if !success
             debug.trace(self + " falling back to legendary armor because making a legendary weapon failed")
-            success = AddLegendaryModToEquippedItemWithKeyword(akTarget, AllowedArmorKeywords)
+            success = CreateLegendaryArmor(akTarget)
+        EndIf
+    else
+        success = CreateLegendaryArmor(akTarget)
+        
+        if !success
+            debug.trace(self + " falling back to a legendary weapon because making legendary armor failed")
+            success = CreateLegendaryWeapon(akTarget)
         EndIf
     endIf
 
-    return success
+    if !success && GenerateNewItemIfNoneFound.GetValueInt() > 0
+        debug.trace(self + " generating a new legendary item, since equipment couldn't be made legendary")
+	    LegendaryItemQuest.GenerateLegendaryItem(akTarget)
+    EndIf
 EndFunction
 
-bool Function AddLegendaryModToEquippedItemWithKeyword(Actor akTarget, FormList akKeywords)
-    debug.trace(self + " looking for eligible equipment to make legendary")
+bool Function CreateLegendaryWeapon(Actor akTarget)
+    debug.trace(self + " is going to make a legendary weapon")
+    
+    if Utility.RandomInt(1, 100) <= GeneratedWeaponChance.GetValueInt()
+        debug.trace(self + " generating a new legendary weapon")
+        LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedWeapon)
+        return true
+    else
+        return AddLegendaryModToEquippedItem(akTarget, AllowedWeaponKeywords)
+    EndIf
+EndFunction
 
-    bool makeWeaponLegendary = Utility.RandomInt(0, 100) > LegendaryWeaponChance.GetValueInt()
+bool Function CreateLegendaryArmor(Actor akTarget)
+    debug.trace(self + " is going to make legendary armor")
+    return AddLegendaryModToEquippedItem(akTarget, AllowedArmorKeywords)
+EndFunction
+
+bool Function AddLegendaryModToEquippedItem(Actor akTarget, FormList akAllowedKeywords)
+    debug.trace(self + " looking for eligible equipment to make legendary")
 
     ; Requires F4SE
     Form[] inventory = akTarget.GetInventoryItems()
@@ -62,7 +82,7 @@ bool Function AddLegendaryModToEquippedItemWithKeyword(Actor akTarget, FormList 
     while(i < inventory.length)
         Form  item = inventory[i]
 
-        if item.HasKeywordInFormList(akKeywords) && (!ExcludeKeywordsList || !item.HasKeywordInFormList(ExcludeKeywordsList))
+        if item.HasKeywordInFormList(akAllowedKeywords) && (!ExcludeKeywordsList || !item.HasKeywordInFormList(ExcludeKeywordsList))
             eligibleEquipment.Add(item)
         endif
 

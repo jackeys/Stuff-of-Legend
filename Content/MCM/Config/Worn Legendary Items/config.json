@@ -23,6 +23,18 @@
                 "sourceType": "GlobalValue",
                 "sourceForm": "Worn Legendary Items.esp|005"
             }
+        },
+        {
+            "text": "Chance of adding a new legendary weapon",
+            "type": "slider",
+            "help": "The percent chance that if the enemy's weapon is going to be made legendary, it will be a new weapon from the legendary leveled lists",
+            "valueOptions": {
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "sourceType": "GlobalValue",
+                "sourceForm": "Worn Legendary Items.esp|006"
+            }
         }
     ]
 }
