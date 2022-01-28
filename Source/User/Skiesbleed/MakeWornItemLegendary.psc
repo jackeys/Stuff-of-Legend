@@ -16,6 +16,9 @@ FormList Property AllowedArmorKeywords Auto Const Mandatory
 FormList Property ExcludeKeywordsList Auto Const
 {If any of the keywords in this form list are present on an item, it will be excluded from the eligible equipment for a legendary mod}
 
+GlobalVariable Property LegendaryWeaponChance Auto Const Mandatory
+{The chance that the enemy's weapon will be selected as the legendary item instead of their armor}
+
 Event OnEffectStart(Actor akTarget, Actor akCaster)
     if !AddLegendaryModToEquippedItem(akTarget) && GenerateNewItemIfNoneFound && GenerateNewItemIfNoneFound.GetValueInt() > 0
 	    LegendaryItemQuest.GenerateLegendaryItem(akTarget)
@@ -23,7 +26,33 @@ Event OnEffectStart(Actor akTarget, Actor akCaster)
 EndEvent
 
 bool Function AddLegendaryModToEquippedItem(Actor akTarget)
+    bool success = false
+
+    if Utility.RandomInt(0, 100) > LegendaryWeaponChance.GetValueInt()
+        debug.trace(self + " is going to make legendary armor")
+        success = AddLegendaryModToEquippedItemWithKeyword(akTarget, AllowedArmorKeywords)
+
+        if !success
+            debug.trace(self + " falling back to a legendary weapon because making legendary armor failed")
+            success = AddLegendaryModToEquippedItemWithKeyword(akTarget, AllowedWeaponKeywords)
+        EndIf
+    else
+        debug.trace(self + " is going to make a legendary weapon")
+        success = AddLegendaryModToEquippedItemWithKeyword(akTarget, AllowedWeaponKeywords)
+
+        if !success
+            debug.trace(self + " falling back to legendary armor because making a legendary weapon failed")
+            success = AddLegendaryModToEquippedItemWithKeyword(akTarget, AllowedArmorKeywords)
+        EndIf
+    endIf
+
+    return success
+EndFunction
+
+bool Function AddLegendaryModToEquippedItemWithKeyword(Actor akTarget, FormList akKeywords)
     debug.trace(self + " looking for eligible equipment to make legendary")
+
+    bool makeWeaponLegendary = Utility.RandomInt(0, 100) > LegendaryWeaponChance.GetValueInt()
 
     ; Requires F4SE
     Form[] inventory = akTarget.GetInventoryItems()
@@ -33,8 +62,7 @@ bool Function AddLegendaryModToEquippedItem(Actor akTarget)
     while(i < inventory.length)
         Form  item = inventory[i]
 
-        if (item.HasKeywordInFormList(AllowedWeaponKeywords) || item.HasKeywordInFormList(AllowedArmorKeywords)) && (!ExcludeKeywordsList || !item.HasKeywordInFormList(ExcludeKeywordsList))
-            debug.trace(akTarget + "Item " + item + " in inventory has an eligible keyword for a legendary mod")
+        if item.HasKeywordInFormList(akKeywords) && (!ExcludeKeywordsList || !item.HasKeywordInFormList(ExcludeKeywordsList))
             eligibleEquipment.Add(item)
         endif
 
@@ -47,7 +75,7 @@ bool Function AddLegendaryModToEquippedItem(Actor akTarget)
         int chosenIndex = Utility.RandomInt(0, eligibleEquipment.length - 1)
         debug.trace(akTarget + "Selecting item at index " + chosenIndex + " out of " + eligibleEquipment.length + " total")
         Form itemToMod = eligibleEquipment[chosenIndex]
-        
+
         if AddLegendaryMod(akTarget, itemToMod)
             ; Attaching a mod to an equipped weapon will prevent the actor from equipping it again, so let's make sure they are using it
             akTarget.EquipItem(itemToMod)

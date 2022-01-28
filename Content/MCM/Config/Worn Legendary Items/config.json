@@ -11,6 +11,18 @@
                 "sourceType": "GlobalValue",
                 "sourceForm": "Worn Legendary Items.esp|001"
             }
+        },
+        {
+            "text": "Chance of the enemy's weapon being made legendary",
+            "type": "slider",
+            "help": "The percent chance that the enemy's weapon is chosen as the legendary item instead of a piece of their armor",
+            "valueOptions": {
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "sourceType": "GlobalValue",
+                "sourceForm": "Worn Legendary Items.esp|005"
+            }
         }
     ]
 }
