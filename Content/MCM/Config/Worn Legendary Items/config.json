@@ -4,15 +4,6 @@
     "minMcmVersion": 1,
     "content": [
         {
-            "text": "Add a new legendary item if no equipment can be made legendary",
-            "type": "switcher",
-            "help": "When a legendary enemy does not have any equipment that can be made legendary, generate a legendary item like the base game would",
-            "valueOptions": {
-                "sourceType": "GlobalValue",
-                "sourceForm": "Worn Legendary Items.esp|001"
-            }
-        },
-        {
             "text": "Chance of the enemy's weapon being made legendary",
             "type": "slider",
             "help": "The percent chance that the enemy's weapon is chosen as the legendary item instead of a piece of their armor",
@@ -47,6 +38,26 @@
                 "sourceType": "GlobalValue",
                 "sourceForm": "Worn Legendary Items.esp|007"
             }
+        },
+        {
+            "text": "Add a new legendary item if no equipment can be made legendary",
+            "type": "switcher",
+            "help": "When a legendary enemy does not have any equipment that can be made legendary, generate a legendary item like the base game would",
+            "valueOptions": {
+                "sourceType": "GlobalValue",
+                "sourceForm": "Worn Legendary Items.esp|001"
+            },
+            "groupControl": 1
+        },
+        {
+            "text": "Use legendary weapon chance when adding new legendary items",
+            "type": "switcher",
+            "help": "Use the weapon chance from these settings instead of the base game's split between weapons and armor when generating a new legendary item",
+            "valueOptions": {
+                "sourceType": "GlobalValue",
+                "sourceForm": "Worn Legendary Items.esp|009"
+            },
+            "groupCondition": 1
         },
         {
             "text": "Turning It Up to 11",

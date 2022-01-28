@@ -31,6 +31,9 @@ GlobalVariable Property GeneratedArmorChance Auto Const Mandatory
 LeveledItem Property GeneratedArmor Auto Const Mandatory
 {The armor list to use to generate armors if the chance is rolled}
 
+GlobalVariable Property UseLegendaryWeaponChanceForGeneratedItems Auto Const Mandatory
+{This boolean global variable indicates if a weapon should be generated based on GeneratedWeaponChance instead of just using the base game's list}
+
 Event OnEffectStart(Actor akTarget, Actor akCaster)
     CreateLegendaryItem(akTarget)
 EndEvent
@@ -42,15 +45,27 @@ Function CreateLegendaryItem(Actor akTarget)
         success = CreateLegendaryWeapon(akTarget)
         
         if !success
-            debug.trace(self + " falling back to legendary armor because making a legendary weapon failed")
-            success = CreateLegendaryArmor(akTarget)
+            if UseLegendaryWeaponChanceForGeneratedItems.GetValueInt() > 0
+                debug.trace(self + " generating a new legendary weapon because making a legendary weapon failed")
+                LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedWeapon)
+                success = true
+            else
+                debug.trace(self + " falling back to legendary armor because making a legendary weapon failed")
+                success = CreateLegendaryArmor(akTarget)
+            EndIf
         EndIf
     else
         success = CreateLegendaryArmor(akTarget)
         
         if !success
-            debug.trace(self + " falling back to a legendary weapon because making legendary armor failed")
-            success = CreateLegendaryWeapon(akTarget)
+            if UseLegendaryWeaponChanceForGeneratedItems.GetValueInt() > 0
+                debug.trace(self + " generating new legendary armor because making legendary armor failed")
+                LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedArmor)
+                success = true
+            else
+                debug.trace(self + " falling back to a legendary weapon because making legendary armor failed")
+                success = CreateLegendaryWeapon(akTarget)
+            EndIf
         EndIf
     endIf
 
