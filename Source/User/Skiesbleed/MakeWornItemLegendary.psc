@@ -25,6 +25,12 @@ GlobalVariable Property GeneratedWeaponChance Auto Const Mandatory
 LeveledItem Property GeneratedWeapon Auto Const Mandatory
 {The weapon list to use to generate weapons if the chance is rolled}
 
+GlobalVariable Property GeneratedArmorChance Auto Const Mandatory
+{The chance that the enemy will get a new legendary armor instead of changing their own}
+
+LeveledItem Property GeneratedArmor Auto Const Mandatory
+{The armor list to use to generate armors if the chance is rolled}
+
 Event OnEffectStart(Actor akTarget, Actor akCaster)
     CreateLegendaryItem(akTarget)
 EndEvent
@@ -68,7 +74,14 @@ EndFunction
 
 bool Function CreateLegendaryArmor(Actor akTarget)
     debug.trace(self + " is going to make legendary armor")
-    return AddLegendaryModToEquippedItem(akTarget, AllowedArmorKeywords)
+
+    if Utility.RandomInt(1, 100) <= GeneratedArmorChance.GetValueInt()
+        debug.trace(self + " generating a new legendary armor")
+        LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedArmor)
+        return true
+    else
+        return AddLegendaryModToEquippedItem(akTarget, AllowedArmorKeywords)
+    EndIf
 EndFunction
 
 bool Function AddLegendaryModToEquippedItem(Actor akTarget, FormList akAllowedKeywords)

@@ -35,6 +35,18 @@
                 "sourceType": "GlobalValue",
                 "sourceForm": "Worn Legendary Items.esp|006"
             }
+        },
+        {
+            "text": "Chance of adding a new legendary armor piece",
+            "type": "slider",
+            "help": "The percent chance that if the enemy's armor is going to be made legendary, it will be new armor from the legendary leveled lists",
+            "valueOptions": {
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "sourceType": "GlobalValue",
+                "sourceForm": "Worn Legendary Items.esp|007"
+            }
         }
     ]
 }
