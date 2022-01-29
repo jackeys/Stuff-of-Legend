@@ -89,8 +89,7 @@
                 "step": 1,
                 "sourceType": "GlobalValue",
                 "sourceForm": "Worn Legendary Items.esp|008"
-            },
-            "groupControl": 2
+            }
         },
         {
             "text": "Maximum number of legendary items per normal enemy",
@@ -102,8 +101,7 @@
                 "step": 1,
                 "sourceType": "GlobalValue",
                 "sourceForm": "Worn Legendary Items.esp|00B"
-            },
-            "groupCondition": 2
+            }
         }
     ]
 }
