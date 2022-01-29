@@ -33,8 +33,11 @@ GlobalVariable Property GeneratedArmorChance Auto Const Mandatory
 LeveledItem Property GeneratedArmor Auto Const Mandatory
 {The armor list to use to generate armors if the chance is rolled}
 
-GlobalVariable Property UseLegendaryWeaponChanceForGeneratedItems Auto Const Mandatory
-{This boolean global variable indicates if a weapon should be generated based on GeneratedWeaponChance instead of just using the base game's list}
+GlobalVariable Property StrictlyEnforceWeaponChanceWhenEquipmentAvailable Auto Const Mandatory
+{This boolean global variable indicates if a weapon should be generated if the weapon chance selected a weapon, even if armor is available}
+
+GlobalVariable Property StrictlyEnforceWeaponChanceWhenEquipmentUnavailable Auto Const Mandatory
+{This boolean global variable indicates if the weapon chance should be used to manually generate weapons/armor instead of using the game's base list. May affect mod compatibility}
 
 GlobalVariable Property MaxItemsMade_Legendary Auto Const Mandatory
 {The upper bound for the number of legendary items that will be created. Must be at least 1}
@@ -52,30 +55,56 @@ EndEvent
 Function CreateLegendaryItems(Actor akTarget)
     Form[] eligibleWeapons = GetEligibleInventoryItems(akTarget, AllowedWeaponKeywords)
     Form[] eligibleArmor = GetEligibleInventoryItems(akTarget, AllowedArmorKeywords)
+    ; This means we're probably dealing with a creature / robot
+    bool hasEquipment = eligibleWeapons.Length > 0 || eligibleArmor.Length > 0
     int numLegendaries = GetNumberOfLegendariesToCreate(akTarget)
     int i = 0
 
-    debug.trace(self + " is creating " + numLegendaries + " legendaries for " + akTarget)
+    debug.trace(self + " is creating " + numLegendaries + " legendaries for " + akTarget + ". HasEquipment=" + hasEquipment)
 
     while i < numLegendaries
-        CreateLegendaryItem(akTarget, eligibleWeapons, eligibleArmor)
+        if hasEquipment
+            MakeEquippedItemLegendary(akTarget, eligibleWeapons, eligibleArmor)
+        else   
+            GenerateLegendaryItem(akTarget)
+        endIf
+
         i += 1
     endWhile
 EndFunction
 
-Function CreateLegendaryItem(Actor akTarget, Form[] aaEligibleWeapons, Form[] aaEligibleArmor)
-    bool success = false
+Function GenerateLegendaryItem(Actor akTarget)
+    if GenerateNewItemIfNoneFound.GetValueInt() > 0
+        if StrictlyEnforceWeaponChanceWhenEquipmentUnavailable.GetValueInt() > 0
+            if Utility.RandomInt(1, 100) <= LegendaryWeaponChance.GetValueInt()
+                debug.trace(self + " generating a legendary weapon")
+                LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedWeapon)
+            else
+                debug.trace(self + " generating legendary armor")
+                LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedArmor)
+            endIf
+        else
+            debug.trace(self + " generating legendary item")
+            LegendaryItemQuest.GenerateLegendaryItem(akTarget)
+        endIf
+    else
+        debug.trace(self + " skipping legendary generation because it is disabled")
+    endIf
+EndFunction
 
+Function MakeEquippedItemLegendary(Actor akTarget, Form[] aaEligibleWeapons, Form[] aaEligibleArmor)
+    bool success = false
+    
     if Utility.RandomInt(1, 100) <= LegendaryWeaponChance.GetValueInt()
         success = CreateLegendaryWeapon(akTarget, aaEligibleWeapons)
         
         if !success
-            if UseLegendaryWeaponChanceForGeneratedItems.GetValueInt() > 0
-                debug.trace(self + " generating a new legendary weapon because making a legendary weapon failed")
+            if StrictlyEnforceWeaponChanceWhenEquipmentAvailable.GetValueInt() > 0
+                debug.trace(self + " generating a new legendary weapon because converting an equipped weapon failed")
                 LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedWeapon)
                 success = true
             else
-                debug.trace(self + " falling back to legendary armor because making a legendary weapon failed")
+                debug.trace(self + " falling back to legendary armor because converting an equipped weapon failed")
                 success = CreateLegendaryArmor(akTarget, aaEligibleArmor)
             EndIf
         EndIf
@@ -83,20 +112,20 @@ Function CreateLegendaryItem(Actor akTarget, Form[] aaEligibleWeapons, Form[] aa
         success = CreateLegendaryArmor(akTarget, aaEligibleArmor)
         
         if !success
-            if UseLegendaryWeaponChanceForGeneratedItems.GetValueInt() > 0
-                debug.trace(self + " generating new legendary armor because making legendary armor failed")
+            if StrictlyEnforceWeaponChanceWhenEquipmentAvailable.GetValueInt() > 0
+                debug.trace(self + " generating new legendary armor because converting equipped armor failed")
                 LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedArmor)
                 success = true
             else
-                debug.trace(self + " falling back to a legendary weapon because making legendary armor failed")
+                debug.trace(self + " falling back to a legendary weapon because converting equipped armor failed")
                 success = CreateLegendaryWeapon(akTarget, aaEligibleWeapons)
             EndIf
         EndIf
     endIf
-
+    
     if !success && GenerateNewItemIfNoneFound.GetValueInt() > 0
-        debug.trace(self + " generating a new legendary item, since equipment couldn't be made legendary")
-	    LegendaryItemQuest.GenerateLegendaryItem(akTarget)
+        debug.trace(self + " generating legendary item because converting an equipped one failed")
+        LegendaryItemQuest.GenerateLegendaryItem(akTarget)
     EndIf
 EndFunction
 
