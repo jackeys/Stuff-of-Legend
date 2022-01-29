@@ -34,8 +34,17 @@ LeveledItem Property GeneratedArmor Auto Const Mandatory
 GlobalVariable Property UseLegendaryWeaponChanceForGeneratedItems Auto Const Mandatory
 {This boolean global variable indicates if a weapon should be generated based on GeneratedWeaponChance instead of just using the base game's list}
 
+GlobalVariable Property MaxItemsMade Auto Const Mandatory
+{The upper bound for the number of legendary items that will be created. Must be at least 1}
+
 Event OnEffectStart(Actor akTarget, Actor akCaster)
-    CreateLegendaryItem(akTarget)
+    int numLegendaries = Utility.RandomInt(1, MaxItemsMade.GetValueInt())
+    debug.trace(self + " adding " + numLegendaries + " for " + akTarget)
+    int i = 0
+    while i < numLegendaries
+        CreateLegendaryItem(akTarget)
+        i += 1
+    endWhile
 EndEvent
 
 Function CreateLegendaryItem(Actor akTarget)
