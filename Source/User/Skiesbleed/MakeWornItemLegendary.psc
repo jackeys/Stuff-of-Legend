@@ -1,4 +1,4 @@
-Scriptname Skiesbleed:MakeWornItemLegendary extends activemagiceffect
+Scriptname Skiesbleed:MakeWornItemLegendary extends activemagiceffect const
 {Makes a worn item legendary (F4SE required). If no worn items have a legendary attach point, can optionally create a new legendary item to add to the target's inventory instead.}
 
 LegendaryItemQuestScript Property LegendaryItemQuest Auto Const Mandatory
@@ -44,27 +44,28 @@ Keyword Property EncTypeLegendary Auto Const Mandatory
 {AUTOFILL}
 
 Event OnEffectStart(Actor akTarget, Actor akCaster)
-    int numLegendaries
-    
-    if akTarget.HasKeyword(EncTypeLegendary)
-        numLegendaries = Utility.RandomInt(1, MaxItemsMade_Legendary.GetValueInt())
-    else
-        numLegendaries = Utility.RandomInt(1, MaxItemsMade_Normal.GetValueInt())
-    endIf
-
-    debug.trace(self + " adding " + numLegendaries + " legendaries for " + akTarget)
-    int i = 0
-    while i < numLegendaries
-        CreateLegendaryItem(akTarget)
-        i += 1
-    endWhile
+    CreateLegendaryItems(akTarget)
 EndEvent
 
-Function CreateLegendaryItem(Actor akTarget)
+Function CreateLegendaryItems(Actor akTarget)
+    Form[] eligibleWeapons = GetEligibleInventoryItems(akTarget, AllowedWeaponKeywords)
+    Form[] eligibleArmor = GetEligibleInventoryItems(akTarget, AllowedArmorKeywords)
+    int numLegendaries = GetNumberOfLegendariesToCreate(akTarget)
+    int i = 0
+
+    debug.trace(self + " is creating " + numLegendaries + " legendaries for " + akTarget)
+
+    while i < numLegendaries
+        CreateLegendaryItem(akTarget, eligibleWeapons, eligibleArmor)
+        i += 1
+    endWhile
+EndFunction
+
+Function CreateLegendaryItem(Actor akTarget, Form[] aaEligibleWeapons, Form[] aaEligibleArmor)
     bool success = false
 
     if Utility.RandomInt(1, 100) <= LegendaryWeaponChance.GetValueInt()
-        success = CreateLegendaryWeapon(akTarget)
+        success = CreateLegendaryWeapon(akTarget, aaEligibleWeapons)
         
         if !success
             if UseLegendaryWeaponChanceForGeneratedItems.GetValueInt() > 0
@@ -73,11 +74,11 @@ Function CreateLegendaryItem(Actor akTarget)
                 success = true
             else
                 debug.trace(self + " falling back to legendary armor because making a legendary weapon failed")
-                success = CreateLegendaryArmor(akTarget)
+                success = CreateLegendaryArmor(akTarget, aaEligibleArmor)
             EndIf
         EndIf
     else
-        success = CreateLegendaryArmor(akTarget)
+        success = CreateLegendaryArmor(akTarget, aaEligibleArmor)
         
         if !success
             if UseLegendaryWeaponChanceForGeneratedItems.GetValueInt() > 0
@@ -86,7 +87,7 @@ Function CreateLegendaryItem(Actor akTarget)
                 success = true
             else
                 debug.trace(self + " falling back to a legendary weapon because making legendary armor failed")
-                success = CreateLegendaryWeapon(akTarget)
+                success = CreateLegendaryWeapon(akTarget, aaEligibleWeapons)
             EndIf
         EndIf
     endIf
@@ -97,7 +98,7 @@ Function CreateLegendaryItem(Actor akTarget)
     EndIf
 EndFunction
 
-bool Function CreateLegendaryWeapon(Actor akTarget)
+bool Function CreateLegendaryWeapon(Actor akTarget, Form[] aaEligibleWeapons)
     debug.trace(self + " is going to make a legendary weapon")
     
     if Utility.RandomInt(1, 100) <= GeneratedWeaponChance.GetValueInt()
@@ -105,11 +106,11 @@ bool Function CreateLegendaryWeapon(Actor akTarget)
         LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedWeapon)
         return true
     else
-        return AddLegendaryModToEquippedItem(akTarget, AllowedWeaponKeywords)
+        return AddLegendaryModToEquippedItem(akTarget, aaEligibleWeapons)
     EndIf
 EndFunction
 
-bool Function CreateLegendaryArmor(Actor akTarget)
+bool Function CreateLegendaryArmor(Actor akTarget, Form[] aaEligibleArmor)
     debug.trace(self + " is going to make legendary armor")
 
     if Utility.RandomInt(1, 100) <= GeneratedArmorChance.GetValueInt()
@@ -117,41 +118,25 @@ bool Function CreateLegendaryArmor(Actor akTarget)
         LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedArmor)
         return true
     else
-        return AddLegendaryModToEquippedItem(akTarget, AllowedArmorKeywords)
+        return AddLegendaryModToEquippedItem(akTarget, aaEligibleArmor)
     EndIf
 EndFunction
 
-bool Function AddLegendaryModToEquippedItem(Actor akTarget, FormList akAllowedKeywords)
+bool Function AddLegendaryModToEquippedItem(Actor akTarget, Form[] aaEligibleEquipment)
     debug.trace(self + " looking for eligible equipment to make legendary")
-
-    ; Requires F4SE
-    Form[] inventory = akTarget.GetInventoryItems()
-
-    Form[] eligibleEquipment = new Form[0]
-    int i = 0
-    while(i < inventory.length)
-        Form  item = inventory[i]
-
-        if item.HasKeywordInFormList(akAllowedKeywords) && (!ExcludeKeywordsList || !item.HasKeywordInFormList(ExcludeKeywordsList))
-            eligibleEquipment.Add(item)
-        endif
-
-        i += 1
-    endwhile
 
     ; If we have at least one eligible item, randomly select one to get a legendary mod
     ; Keep trying until we succeed, in case the item doesn't have the proper attach point, doesn't have any allowed legendary rules, etc
-    while eligibleEquipment.length > 0
-        int chosenIndex = Utility.RandomInt(0, eligibleEquipment.length - 1)
-        debug.trace(akTarget + "Selecting item at index " + chosenIndex + " out of " + eligibleEquipment.length + " total")
-        Form itemToMod = eligibleEquipment[chosenIndex]
+    while aaEligibleEquipment.length > 0
+        int chosenIndex = Utility.RandomInt(0, aaEligibleEquipment.length - 1)
+        debug.trace(akTarget + "Selecting item at index " + chosenIndex + " out of " + aaEligibleEquipment.length + " total")
+        Form itemToMod = aaEligibleEquipment[chosenIndex]
+        aaEligibleEquipment.Remove(chosenIndex)
 
         if AddLegendaryMod(akTarget, itemToMod)
             ; Attaching a mod to an equipped weapon will prevent the actor from equipping it again, so let's make sure they are using it
             akTarget.EquipItem(itemToMod)
             return true
-        else
-            eligibleEquipment.Remove(chosenIndex)
         endIf
     endWhile
     
@@ -192,4 +177,31 @@ bool Function AddLegendaryMod(ObjectReference akRecipient, Form  item, FormList 
 	endif
 
     return success
+EndFunction
+
+int Function GetNumberOfLegendariesToCreate(Actor akTarget)
+    if akTarget.HasKeyword(EncTypeLegendary)
+        return Utility.RandomInt(1, MaxItemsMade_Legendary.GetValueInt())
+    else
+        return Utility.RandomInt(1, MaxItemsMade_Normal.GetValueInt())
+    endIf
+EndFunction
+
+Form[] Function GetEligibleInventoryItems(Actor akActor, FormList akAllowedKeywords)
+    ; Requires F4SE
+    Form[] inventory = akActor.GetInventoryItems()
+
+    Form[] eligibleEquipment = new Form[0]
+    int i = 0
+    while(i < inventory.length)
+        Form  item = inventory[i]
+
+        if item.HasKeywordInFormList(akAllowedKeywords) && (!ExcludeKeywordsList || !item.HasKeywordInFormList(ExcludeKeywordsList))
+            eligibleEquipment.Add(item)
+        endif
+
+        i += 1
+    endwhile
+
+    return eligibleEquipment
 EndFunction
