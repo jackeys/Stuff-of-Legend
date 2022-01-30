@@ -1,7 +1,7 @@
 {
     "modName": "Worn Legendary Items",
     "displayName": "Worn Legendary Items",
-    "minMcmVersion": 1,
+    "minMcmVersion": 2,
     "content": [
         {
             "text": "Chance of the enemy's weapon being made legendary",
@@ -111,6 +111,92 @@
                 "sourceType": "GlobalValue",
                 "sourceForm": "Worn Legendary Items.esp|008"
             }
+        }
+    ],
+    "pages": [
+        {
+            "pageDisplayName": "Eligible Equipment",
+            "content": [
+                {
+                    "text": "Enemies are able to wear more types of equipment than can normally become legendary. By default, this equipment will never be made legendary, but these settings allow you to make them eligible. Note that many of these items likely do not have naming rules for legendary effects, so you will have to read their description to know what the effect does.",
+                    "type": "text"
+                },
+                {
+                    "text": "Clothing",
+                    "type": "switcher",
+                    "help": "Anything that can be upgraded with ballistic weave. May overlap with some of the other categories.",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "ClothingEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Headgear",
+                    "type": "switcher",
+                    "help": "Mostly helmets and gas masks, but includes a few hats and hoods (Keyword: ArmorBodyPartHead)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "HeadgearEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Hats",
+                    "type": "switcher",
+                    "help": "Standard cloth hats (Keyword: ArmorTypeHat)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "HatEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Goggles",
+                    "type": "switcher",
+                    "help": "(Keyword: ArmorBodyPartEyes)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "EyewearEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Dog Armor and Bandanas",
+                    "type": "switcher",
+                    "help": "Includes clothing exclusive to dogs as well as bandanas",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "DogArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                }
+            ]
         }
     ]
 }

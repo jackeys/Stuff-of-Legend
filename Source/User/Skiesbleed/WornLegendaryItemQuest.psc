@@ -2,12 +2,66 @@ Scriptname Skiesbleed:WornLegendaryItemQuest extends Quest
 
 LegendaryItemQuestScript Property LegendaryItemQuest Auto Const Mandatory
 
+FormList Property LegendaryModRule_AllowedKeywords_ObjectTypeArmor Const Auto Mandatory
+{AUTOFILL}
+
+bool Property DogArmorEnabled = false Auto
+Keyword Property DogArmorKeyword Const Auto Mandatory
+
+bool Property HeadgearEnabled = false Auto
+Keyword Property HeadgearKeyword Const Auto Mandatory
+
+bool Property ClothingEnabled = false Auto
+Keyword Property ClothingKeyword Const Auto Mandatory
+
+bool Property HatEnabled = false Auto
+Keyword Property HatKeyword Const Auto Mandatory
+
+bool Property EyewearEnabled = false Auto
+Keyword Property EyewearKeyword Const Auto Mandatory
+
 ; Used to help spread out the legendary effects that are used
 ObjectMod[] PreviouslySpawnedMods
 
 Event OnInit()
     PreviouslySpawnedMods = new ObjectMod[0]
+    DetectExistingKeywords()
 EndEvent
+
+Function DetectExistingKeywords()
+    DogArmorEnabled = LegendaryModRule_AllowedKeywords_ObjectTypeArmor.Find(DogArmorKeyword) > 0
+    HeadgearEnabled = LegendaryModRule_AllowedKeywords_ObjectTypeArmor.Find(HeadgearKeyword) > 0
+    ClothingEnabled = LegendaryModRule_AllowedKeywords_ObjectTypeArmor.Find(ClothingKeyword) > 0
+    HatEnabled = LegendaryModRule_AllowedKeywords_ObjectTypeArmor.Find(HatKeyword) > 0
+    EyewearEnabled = LegendaryModRule_AllowedKeywords_ObjectTypeArmor.Find(EyewearKeyword) > 0
+EndFunction
+
+Function RefreshAllowedKeywords()
+    UpdateFormList(DogArmorEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, DogArmorKeyword)
+    UpdateFormList(HeadgearEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, HeadgearKeyword)
+    UpdateFormList(ClothingEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, ClothingKeyword)
+    UpdateFormList(HatEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, HatKeyword)
+    UpdateFormList(EyewearEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, EyewearKeyword)
+EndFunction
+
+Function UpdateFormList(bool abEnabled, FormList akList, Form akKeyword)
+	int index = akList.Find(akKeyword)
+	if abEnabled
+		if index >= 0
+			debug.trace(self + " No action needed - found enabled keyword " + akKeyword + " in form list " + akList + " at index " + index)
+		else
+			debug.trace(self + " Adding enabled keyword " + akKeyword + " to form list " + akList)
+			akList.AddForm(akKeyword)
+		endIf
+	else
+		if index < 0
+			debug.trace(self + " No action needed - disabled keyword " + akKeyword + " not found")
+		else
+			debug.trace(self + " Removing disabled keyword " + akKeyword + " from form list " + akList)
+			akList.RemoveAddedForm(akKeyword)
+		endIf
+	EndIf
+EndFunction
 
 bool Function AddLegendaryMod(ObjectReference akRecipient, Form  item, FormList ListOfSpecificModsToChooseFrom = None, FormList ListOfSpecificModsToDisallow = None)
 	debug.trace(akRecipient + "Attaching legendary mod to inventory item " + item)
