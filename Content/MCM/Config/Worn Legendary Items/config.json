@@ -184,7 +184,7 @@
                 {
                     "text": "Dog Armor and Bandanas",
                     "type": "switcher",
-                    "help": "Includes clothing exclusive to dogs as well as bandanas",
+                    "help": "Includes clothing exclusive to dogs as well as bandanas (Keyword: ClothingDogmeat)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
                         "sourceForm": "Worn Legendary Items.esp|00C",
@@ -195,6 +195,34 @@
                         "form": "Worn Legendary Items.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
+                },
+                {
+                    "text": "Power Armor to the People Not Detected",
+                    "type": "switcher",
+                    "help": "The Power Armor setting shouldn't be used if PAttP is detected",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "PAttPNotDetected"
+                    },
+                    "groupCondition": 99,
+                    "groupControl": 1
+                },
+                {
+                    "text": "Power Armor",
+                    "type": "switcher",
+                    "help": "Do not use if using Power Armor to the People - change the Legendary Effects in that mod's settings",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "PowerArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    },
+                    "groupCondition": 1
                 }
             ]
         }

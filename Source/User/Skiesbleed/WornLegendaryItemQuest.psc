@@ -22,6 +22,12 @@ Keyword Property HatKeyword Const Auto Mandatory
 bool Property EyewearEnabled = false Auto
 Keyword Property EyewearKeyword Const Auto Mandatory
 
+bool Property PowerArmorEnabled = false Auto
+Keyword Property PowerArmorKeyword Const Auto Mandatory
+
+; This is specifically inverted for MCM, since there is something we want to display only when Power Armor to the People is not detected
+bool Property PAttPNotDetected = true Auto
+
 ; Used to help spread out the legendary effects that are used
 ObjectMod[] PreviouslySpawnedMods
 
@@ -37,14 +43,22 @@ Function DetectExistingKeywords()
     ClothingEnabled = LegendaryModRule_AllowedKeywords_ObjectTypeArmor.Find(ClothingKeyword) > 0
     HatEnabled = LegendaryModRule_AllowedKeywords_ObjectTypeArmor.Find(HatKeyword) > 0
     EyewearEnabled = LegendaryModRule_AllowedKeywords_ObjectTypeArmor.Find(EyewearKeyword) > 0
+    PowerArmorEnabled = LegendaryModRule_AllowedKeywords_ObjectTypeArmor.Find(PowerArmorKeyword) > 0
 EndFunction
 
 Function RefreshAllowedKeywords()
+    DetectOtherMods()
+    
     UpdateFormList(DogArmorEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, DogArmorKeyword)
     UpdateFormList(HeadgearEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, HeadgearKeyword)
     UpdateFormList(ClothingEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, ClothingKeyword)
     UpdateFormList(HatEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, HatKeyword)
     UpdateFormList(EyewearEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, EyewearKeyword)
+    
+    ; We don't want to manage power armor if Power Armor to the People is present, because there is an option to remove base game armor effects
+    if PAttPNotDetected
+        UpdateFormList(PowerArmorEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, PowerArmorKeyword)
+    endIf
 EndFunction
 
 Function DetectOtherMods()
@@ -55,6 +69,10 @@ Function DetectOtherMods()
         debug.trace(self + " detected Tesla Cannon, adding keyword " + teslaCannonKeyword + " to allowed list")
         UpdateFormList(true, WLI_FormList_AlwaysAllowedKeywords, teslaCannonKeyword)
     endIf
+
+    ; Arbitrary form that has existed since the first Power Armor to the People.esp
+    PAttPNotDetected = (Game.GetFormFromFile(0x00000800, "Power Armor to the People.esp") == None)
+    debug.trace(self + " Power Armor to the People detected: " + !PAttPNotDetected)
 EndFunction
 
 Function UpdateFormList(bool abEnabled, FormList akList, Form akKeyword)
