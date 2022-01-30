@@ -4,6 +4,8 @@ LegendaryItemQuestScript Property LegendaryItemQuest Auto Const Mandatory
 
 FormList Property LegendaryModRule_AllowedKeywords_ObjectTypeArmor Const Auto Mandatory
 {AUTOFILL}
+FormList Property WLI_FormList_AlwaysAllowedKeywords Const Auto Mandatory
+{AUTOFILL}
 
 bool Property DogArmorEnabled = false Auto
 Keyword Property DogArmorKeyword Const Auto Mandatory
@@ -26,6 +28,7 @@ ObjectMod[] PreviouslySpawnedMods
 Event OnInit()
     PreviouslySpawnedMods = new ObjectMod[0]
     DetectExistingKeywords()
+    DetectOtherMods()
 EndEvent
 
 Function DetectExistingKeywords()
@@ -42,6 +45,16 @@ Function RefreshAllowedKeywords()
     UpdateFormList(ClothingEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, ClothingKeyword)
     UpdateFormList(HatEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, HatKeyword)
     UpdateFormList(EyewearEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, EyewearKeyword)
+EndFunction
+
+Function DetectOtherMods()
+    ; Keyword on Tesla Cannon - ccBGSFO4046_dn_TesCan
+    Keyword teslaCannonKeyword = Game.GetFormFromFile(0x00000021, "ccbgsfo4046-tescan.esl") as Keyword
+
+    if teslaCannonKeyword
+        debug.trace(self + " detected Tesla Cannon, adding keyword " + teslaCannonKeyword + " to allowed list")
+        UpdateFormList(true, WLI_FormList_AlwaysAllowedKeywords, teslaCannonKeyword)
+    endIf
 EndFunction
 
 Function UpdateFormList(bool abEnabled, FormList akList, Form akKeyword)
