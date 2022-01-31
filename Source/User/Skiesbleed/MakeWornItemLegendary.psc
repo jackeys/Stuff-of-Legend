@@ -167,9 +167,12 @@ bool Function AddLegendaryModToEquippedItem(Actor akTarget, Form[] aaEligibleEqu
         Form itemToMod = aaEligibleEquipment[chosenIndex]
         aaEligibleEquipment.Remove(chosenIndex)
 
+        ; Attaching a mod to an item can cause it to be unequipped in odd ways, so check if we should be re-equipping it afterwards
+        bool isEquipped = akTarget.IsEquipped(itemToMod)
         if WornLegendaryItemQuest.AddLegendaryMod(akTarget, itemToMod)
-            ; Attaching a mod to an equipped weapon will prevent the actor from equipping it again, so let's make sure they are using it
-            akTarget.EquipItem(itemToMod)
+            if isEquipped
+                akTarget.EquipItem(itemToMod)
+            endIf
             return true
         endIf
     endWhile

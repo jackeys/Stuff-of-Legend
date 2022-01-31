@@ -6,6 +6,8 @@ FormList Property LegendaryModRule_AllowedKeywords_ObjectTypeArmor Const Auto Ma
 {AUTOFILL}
 FormList Property WLI_FormList_AlwaysAllowedKeywords Const Auto Mandatory
 {AUTOFILL}
+FormList Property WLI_FormList_IneligibleKeywords Const Auto Mandatory
+{AUTOFILL}
 
 bool Property DogArmorEnabled = false Auto
 Keyword Property DogArmorKeyword Const Auto Mandatory
@@ -64,15 +66,23 @@ EndFunction
 Function DetectOtherMods()
     ; Keyword on Tesla Cannon - ccBGSFO4046_dn_TesCan
     Keyword teslaCannonKeyword = Game.GetFormFromFile(0x00000021, "ccbgsfo4046-tescan.esl") as Keyword
-
+	
     if teslaCannonKeyword
         debug.trace(self + " detected Tesla Cannon, adding keyword " + teslaCannonKeyword + " to allowed list")
         UpdateFormList(true, WLI_FormList_AlwaysAllowedKeywords, teslaCannonKeyword)
     endIf
-
+	
     ; Arbitrary form that has existed since the first Power Armor to the People.esp
     PAttPNotDetected = (Game.GetFormFromFile(0x00000800, "Power Armor to the People.esp") == None)
     debug.trace(self + " Power Armor to the People detected: " + !PAttPNotDetected)
+	
+	; Keyword on Institute Power Armor - zzzM150IPAdn_PowerArmor_I01
+	Keyword institutePowerArmorKeyword = Game.GetFormFromFile(0x00000FA0, "InstitutePowerArmor.esp") as Keyword
+	
+    if institutePowerArmorKeyword
+        debug.trace(self + " detected Institute Power Armor, adding keyword " + institutePowerArmorKeyword + " to exclusion list")
+        UpdateFormList(true, WLI_FormList_IneligibleKeywords, institutePowerArmorKeyword)
+    endIf
 EndFunction
 
 Function UpdateFormList(bool abEnabled, FormList akList, Form akKeyword)
