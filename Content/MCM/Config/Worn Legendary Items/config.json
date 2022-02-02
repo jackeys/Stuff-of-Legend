@@ -225,6 +225,214 @@
                     "groupCondition": 1
                 }
             ]
+        },
+        {
+            "pageDisplayName": "Creatures and Robots",
+            "content": [
+                {
+                    "text": "These types of enemies typically do not have equipment that can be made legendary. These settings allow you to toggle whether they should still get generated legendary items like they do in the base game.",
+                    "type": "text"
+                },
+                {
+                    "text": "Far Harbor Installed",
+                    "type": "switcher",
+                    "help": "Global variable DLCcoastLoaded",
+                    "valueOptions": {
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "DLCCoast.esm|800"
+                    },
+                    "groupCondition": 99,
+                    "groupControl": 1
+                },
+                {
+                    "text": "Animals",
+                    "type": "switcher",
+                    "help": "Dogs, molerats, mutant hounds, radstags, Yao Guai, etc (Keyword: ActorTypeAnimal)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "LegendaryAnimalDropsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Bugs",
+                    "type": "switcher",
+                    "help": "Bloodbugs, Bloatflies, Radroaches, Stingwings, etc (Keyword: ActorTypeBug)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "LegendaryBugDropsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Deathclaws",
+                    "type": "switcher",
+                    "help": "Every type of deathclaw, including gatorclaws (Keyword: ActorTypeDeathclaw)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "LegendaryDeathclawDropsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Feral Ghouls",
+                    "type": "switcher",
+                    "help": "Every type of Feral Ghoul (Keyword: ActorTypeFeralGhoul)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "LegendaryFeralGhoulDropsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Mirelurks",
+                    "type": "switcher",
+                    "help": "Normal Mirelurks and Mirelurk Hunters (Keyword: ActorTypeMirelurk)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "LegendaryMirelurkDropsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Mirelurk Kings",
+                    "type": "switcher",
+                    "help": "(Keyword: ActorTypeMirelurkKing)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "LegendaryMirelurkKingDropsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Mirelurk Queens",
+                    "type": "switcher",
+                    "help": "Unless you are using mods, there is only one: in Far Harbor (Keyword: ActorTypeMirelurkQueen)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "LegendaryMirelurkQueenDropsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Radscorpions",
+                    "type": "switcher",
+                    "help": "(Keyword: ActorTypeRadscorpion)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "LegendaryRadscorpionDropsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Robots",
+                    "type": "switcher",
+                    "help": "Every type of robot (Keyword: ActorTypeRobot)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "LegendaryRobotDropsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Far Harbor",
+                    "type": "section",
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Anglers",
+                    "type": "switcher",
+                    "help": "(Keyword: DLC03_ActorTypeAngler)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "LegendaryFarHarborAnglerDropsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Fog Crawlers",
+                    "type": "switcher",
+                    "help": "(Keyword: DLC03_ActorTypeFogCrawler)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "LegendaryFarHarborFogCrawlerDropsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Gulpers",
+                    "type": "switcher",
+                    "help": "(Keyword: ActorTypeGulper)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "propertyName": "LegendaryFarHarborGulperDropsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Worn Legendary Items.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    },
+                    "groupCondition": 1
+                }
+            ]
         }
     ]
 }

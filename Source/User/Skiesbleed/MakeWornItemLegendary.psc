@@ -51,6 +51,9 @@ GlobalVariable Property MaxItemsMade_Normal Auto Const Mandatory
 Keyword Property EncTypeLegendary Auto Const Mandatory
 {AUTOFILL}
 
+FormList Property DisallowGeneratedItemsForActorKeywordList Auto Const Mandatory
+{If any of the keywords in this form list are present on the actor, it will be excluded from generating items if it doesn't have eligible equipment}
+
 Event OnEffectStart(Actor akTarget, Actor akCaster)
     CreateLegendaryItems(akTarget)
 EndEvent
@@ -68,7 +71,7 @@ Function CreateLegendaryItems(Actor akTarget)
     while i < numLegendaries
         if hasEquipment
             MakeEquippedItemLegendary(akTarget, eligibleWeapons, eligibleArmor)
-        else   
+        else
             GenerateLegendaryItem(akTarget)
         endIf
 
@@ -77,7 +80,7 @@ Function CreateLegendaryItems(Actor akTarget)
 EndFunction
 
 Function GenerateLegendaryItem(Actor akTarget)
-    if GenerateNewItemIfNoneFound.GetValueInt() > 0
+    if GenerateNewItemIfNoneFound.GetValueInt() > 0 && !akTarget.HasKeywordInFormList(DisallowGeneratedItemsForActorKeywordList)
         if StrictlyEnforceWeaponChanceWhenEquipmentUnavailable.GetValueInt() > 0
             if Utility.RandomInt(1, 100) <= LegendaryWeaponChance.GetValueInt()
                 debug.trace(self + " generating a legendary weapon")
@@ -102,7 +105,7 @@ Function MakeEquippedItemLegendary(Actor akTarget, Form[] aaEligibleWeapons, For
         success = CreateLegendaryWeapon(akTarget, aaEligibleWeapons)
         
         if !success
-            if StrictlyEnforceWeaponChanceWhenEquipmentAvailable.GetValueInt() > 0
+            if StrictlyEnforceWeaponChanceWhenEquipmentAvailable.GetValueInt() > 0 && !akTarget.HasKeywordInFormList(DisallowGeneratedItemsForActorKeywordList)
                 debug.trace(self + " generating a new legendary weapon because converting an equipped weapon failed")
                 LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedWeapon)
                 success = true
@@ -115,7 +118,7 @@ Function MakeEquippedItemLegendary(Actor akTarget, Form[] aaEligibleWeapons, For
         success = CreateLegendaryArmor(akTarget, aaEligibleArmor)
         
         if !success
-            if StrictlyEnforceWeaponChanceWhenEquipmentAvailable.GetValueInt() > 0
+            if StrictlyEnforceWeaponChanceWhenEquipmentAvailable.GetValueInt() > 0 && !akTarget.HasKeywordInFormList(DisallowGeneratedItemsForActorKeywordList)
                 debug.trace(self + " generating new legendary armor because converting equipped armor failed")
                 LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedArmor)
                 success = true
@@ -126,7 +129,7 @@ Function MakeEquippedItemLegendary(Actor akTarget, Form[] aaEligibleWeapons, For
         EndIf
     endIf
     
-    if !success && GenerateNewItemIfNoneFound.GetValueInt() > 0
+    if !success && GenerateNewItemIfNoneFound.GetValueInt() > 0 && !akTarget.HasKeywordInFormList(DisallowGeneratedItemsForActorKeywordList)
         debug.trace(self + " generating legendary item because converting an equipped one failed")
         LegendaryItemQuest.GenerateLegendaryItem(akTarget)
     EndIf
@@ -135,7 +138,7 @@ EndFunction
 bool Function CreateLegendaryWeapon(Actor akTarget, Form[] aaEligibleWeapons)
     debug.trace(self + " is going to make a legendary weapon")
     
-    if Utility.RandomInt(1, 100) <= GeneratedWeaponChance.GetValueInt()
+    if Utility.RandomInt(1, 100) <= GeneratedWeaponChance.GetValueInt() && !akTarget.HasKeywordInFormList(DisallowGeneratedItemsForActorKeywordList)
         debug.trace(self + " generating a new legendary weapon")
         LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedWeapon)
         return true
@@ -147,7 +150,7 @@ EndFunction
 bool Function CreateLegendaryArmor(Actor akTarget, Form[] aaEligibleArmor)
     debug.trace(self + " is going to make legendary armor")
 
-    if Utility.RandomInt(1, 100) <= GeneratedArmorChance.GetValueInt()
+    if Utility.RandomInt(1, 100) <= GeneratedArmorChance.GetValueInt() && !akTarget.HasKeywordInFormList(DisallowGeneratedItemsForActorKeywordList)
         debug.trace(self + " generating a new legendary armor")
         LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedArmor)
         return true
