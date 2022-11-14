@@ -1,9 +1,9 @@
-Scriptname Skiesbleed:MakeWornItemLegendary extends activemagiceffect const
+Scriptname StuffOfLegend:LegendaryCreatureItemEffect extends activemagiceffect const
 {Makes a worn item legendary (F4SE required). If no worn items have a legendary attach point, can optionally create a new legendary item to add to the target's inventory instead.}
 
 LegendaryItemQuestScript Property LegendaryItemQuest Auto Const Mandatory
 {AUTOFILL}
-Skiesbleed:WornLegendaryItemQuest Property WornLegendaryItemQuest Auto Const Mandatory
+StuffOfLegend:WornLegendaryItemQuest Property WornLegendaryItemQuest Auto Const Mandatory
 {AUTOFILL}
 
 GlobalVariable Property GenerateNewItemIfNoneFound Auto Const Mandatory

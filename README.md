@@ -1,1 +1,1 @@
-Worn Legendary Items
+Stuff of Legend

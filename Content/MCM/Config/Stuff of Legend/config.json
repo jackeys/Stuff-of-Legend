@@ -1,6 +1,6 @@
 {
-    "modName": "Worn Legendary Items",
-    "displayName": "Worn Legendary Items",
+    "modName": "Stuff of Legend",
+    "displayName": "Stuff of Legend",
     "minMcmVersion": 2,
     "content": [
         {
@@ -12,7 +12,7 @@
                 "max": 100,
                 "step": 1,
                 "sourceType": "GlobalValue",
-                "sourceForm": "Worn Legendary Items.esp|005"
+                "sourceForm": "Stuff of Legend.esp|005"
             }
         },
         {
@@ -24,7 +24,7 @@
                 "max": 100,
                 "step": 1,
                 "sourceType": "GlobalValue",
-                "sourceForm": "Worn Legendary Items.esp|006"
+                "sourceForm": "Stuff of Legend.esp|006"
             }
         },
         {
@@ -36,7 +36,7 @@
                 "max": 100,
                 "step": 1,
                 "sourceType": "GlobalValue",
-                "sourceForm": "Worn Legendary Items.esp|007"
+                "sourceForm": "Stuff of Legend.esp|007"
             }
         },
         {
@@ -45,7 +45,7 @@
             "help": "Necessary to continue adding legendary items for legendary creatures and robots",
             "valueOptions": {
                 "sourceType": "GlobalValue",
-                "sourceForm": "Worn Legendary Items.esp|001"
+                "sourceForm": "Stuff of Legend.esp|001"
             },
             "groupControl": 1
         },
@@ -63,7 +63,7 @@
             "help": "If an equipped weapon should be made legendary but none are eligible, generate a new one instead of making legendary armor",
             "valueOptions": {
                 "sourceType": "GlobalValue",
-                "sourceForm": "Worn Legendary Items.esp|009"
+                "sourceForm": "Stuff of Legend.esp|009"
             }
         },
         {
@@ -72,7 +72,7 @@
             "help": "Use the configured weapon chance for generated legendaries instead of the base game's chances",
             "valueOptions": {
                 "sourceType": "GlobalValue",
-                "sourceForm": "Worn Legendary Items.esp|00D"
+                "sourceForm": "Stuff of Legend.esp|00D"
             },
             "groupCondition": 1
         },
@@ -97,7 +97,7 @@
                 "max": 3,
                 "step": 1,
                 "sourceType": "GlobalValue",
-                "sourceForm": "Worn Legendary Items.esp|00A"
+                "sourceForm": "Stuff of Legend.esp|00A"
             }
         },
         {
@@ -109,7 +109,7 @@
                 "max": 10,
                 "step": 1,
                 "sourceType": "GlobalValue",
-                "sourceForm": "Worn Legendary Items.esp|008"
+                "sourceForm": "Stuff of Legend.esp|008"
             }
         }
     ],
@@ -127,12 +127,12 @@
                     "help": "Anything that can be upgraded with ballistic weave. May overlap with some of the other categories.",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "ClothingEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -142,12 +142,12 @@
                     "help": "Mostly helmets and gas masks, but includes a few hats and hoods (Keyword: ArmorBodyPartHead)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "HeadgearEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -157,12 +157,12 @@
                     "help": "Standard cloth hats (Keyword: ArmorTypeHat)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "HatEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -172,12 +172,12 @@
                     "help": "(Keyword: ArmorBodyPartEyes)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "EyewearEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -187,12 +187,12 @@
                     "help": "Includes clothing exclusive to dogs as well as bandanas (Keyword: ClothingDogmeat)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "DogArmorEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -202,7 +202,7 @@
                     "help": "The Power Armor setting shouldn't be used if PAttP is detected",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "PAttPNotDetected"
                     },
                     "groupCondition": 99,
@@ -214,12 +214,12 @@
                     "help": "Do not use if using Power Armor to the People - change the Legendary Effects in that mod's settings",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "PowerArmorEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     },
                     "groupCondition": 1
@@ -250,12 +250,12 @@
                     "help": "Dogs, molerats, mutant hounds, radstags, Yao Guai, etc (Keyword: ActorTypeAnimal)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "LegendaryAnimalDropsEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -265,12 +265,12 @@
                     "help": "Bloodbugs, Bloatflies, Radroaches, Stingwings, etc (Keyword: ActorTypeBug)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "LegendaryBugDropsEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -280,12 +280,12 @@
                     "help": "Every type of deathclaw, including gatorclaws (Keyword: ActorTypeDeathclaw)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "LegendaryDeathclawDropsEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -295,12 +295,12 @@
                     "help": "Every type of Feral Ghoul (Keyword: ActorTypeFeralGhoul)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "LegendaryFeralGhoulDropsEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -310,12 +310,12 @@
                     "help": "Normal Mirelurks and Mirelurk Hunters (Keyword: ActorTypeMirelurk)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "LegendaryMirelurkDropsEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -325,12 +325,12 @@
                     "help": "(Keyword: ActorTypeMirelurkKing)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "LegendaryMirelurkKingDropsEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -340,12 +340,12 @@
                     "help": "Unless you are using mods, there is only one: in Far Harbor (Keyword: ActorTypeMirelurkQueen)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "LegendaryMirelurkQueenDropsEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -355,12 +355,12 @@
                     "help": "(Keyword: ActorTypeRadscorpion)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "LegendaryRadscorpionDropsEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -370,12 +370,12 @@
                     "help": "Every type of robot (Keyword: ActorTypeRobot)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "LegendaryRobotDropsEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     }
                 },
@@ -390,12 +390,12 @@
                     "help": "(Keyword: DLC03_ActorTypeAngler)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "LegendaryFarHarborAnglerDropsEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     },
                     "groupCondition": 1
@@ -406,12 +406,12 @@
                     "help": "(Keyword: DLC03_ActorTypeFogCrawler)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "LegendaryFarHarborFogCrawlerDropsEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     },
                     "groupCondition": 1
@@ -422,12 +422,12 @@
                     "help": "(Keyword: ActorTypeGulper)",
                     "valueOptions": {
                         "sourceType": "PropertyValueBool",
-                        "sourceForm": "Worn Legendary Items.esp|00C",
+                        "sourceForm": "Stuff of Legend.esp|00C",
                         "propertyName": "LegendaryFarHarborGulperDropsEnabled"
                     },
                     "action": {
                         "type": "CallFunction",
-                        "form": "Worn Legendary Items.esp|00C",
+                        "form": "Stuff of Legend.esp|00C",
                         "function": "RefreshAllowedKeywords"
                     },
                     "groupCondition": 1

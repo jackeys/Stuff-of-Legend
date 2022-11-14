@@ -1,4 +1,4 @@
-Scriptname Skiesbleed:WornLegendaryItemQuest extends Quest
+Scriptname StuffOfLegend:WornLegendaryItemQuest extends Quest
 
 LegendaryItemQuestScript Property LegendaryItemQuest Auto Const Mandatory
 
