@@ -433,6 +433,47 @@
                     "groupCondition": 1
                 }
             ]
+        },
+        {
+            "pageDisplayName": "Containers",
+            "content": [
+                {
+                    "text": "Boss Trunk Legendary Chance",
+                    "type": "slider",
+                    "help": "The percent chance that a boss trunk will contain a legendary item",
+                    "valueOptions": {
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|00E"
+                    }
+                },
+                {
+                    "text": "Master Locked Safe Legendary Chance",
+                    "type": "slider",
+                    "help": "The percent chance that a safe with a Master lock will contain a legendary item",
+                    "valueOptions": {
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|00F"
+                    }
+                },
+                {
+                    "text": "Expert Locked Safe Legendary Chance",
+                    "type": "slider",
+                    "help": "The percent chance that a safe with an Expert lock will contain a legendary item",
+                    "valueOptions": {
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|010"
+                    }
+                }
+            ]
         }
     ]
 }
