@@ -15,6 +15,9 @@ FormList Property AllowedWeaponKeywords Auto Const Mandatory
 FormList Property AllowedArmorKeywords Auto Const Mandatory
 {If an item has any of the keywords on this list, it will be considered to be armor that can have a legendary mod}
 
+FormList Property DisallowGeneratedItemsForActorKeywordList Auto Const Mandatory
+{If any of the keywords in this form list are present on the actor, it will be excluded from generating items if it doesn't have eligible equipment}
+
 FormList Property ExcludeKeywordsList Auto Const Mandatory
 {If any of the keywords in this form list are present on an item, it will be excluded from the eligible equipment for a legendary mod}
 
@@ -39,9 +42,6 @@ LeveledItem Property GeneratedArmor Auto Const Mandatory
 GlobalVariable Property StrictlyEnforceWeaponChanceWhenEquipmentAvailable Auto Const Mandatory
 {This boolean global variable indicates if a weapon should be generated if the weapon chance selected a weapon, even if armor is available}
 
-GlobalVariable Property StrictlyEnforceWeaponChanceWhenEquipmentUnavailable Auto Const Mandatory
-{This boolean global variable indicates if the weapon chance should be used to manually generate weapons/armor instead of using the game's base list. May affect mod compatibility}
-
 GlobalVariable Property MaxItemsMade_Legendary Auto Const Mandatory
 {The upper bound for the number of legendary items that will be created. Must be at least 1}
 
@@ -50,9 +50,6 @@ GlobalVariable Property MaxItemsMade_Normal Auto Const Mandatory
 
 Keyword Property EncTypeLegendary Auto Const Mandatory
 {AUTOFILL}
-
-FormList Property DisallowGeneratedItemsForActorKeywordList Auto Const Mandatory
-{If any of the keywords in this form list are present on the actor, it will be excluded from generating items if it doesn't have eligible equipment}
 
 Event OnEffectStart(Actor akTarget, Actor akCaster)
     CreateLegendaryItems(akTarget)
@@ -72,30 +69,11 @@ Function CreateLegendaryItems(Actor akTarget)
         if hasEquipment
             MakeEquippedItemLegendary(akTarget, eligibleWeapons, eligibleArmor)
         else
-            GenerateLegendaryItem(akTarget)
+            WornLegendaryItemQuest.GenerateLegendaryItem(akTarget)
         endIf
 
         i += 1
     endWhile
-EndFunction
-
-Function GenerateLegendaryItem(Actor akTarget)
-    if GenerateNewItemIfNoneFound.GetValueInt() > 0 && !akTarget.HasKeywordInFormList(DisallowGeneratedItemsForActorKeywordList)
-        if StrictlyEnforceWeaponChanceWhenEquipmentUnavailable.GetValueInt() > 0
-            if Utility.RandomInt(1, 100) <= LegendaryWeaponChance.GetValueInt()
-                debug.trace(self + " generating a legendary weapon")
-                LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedWeapon)
-            else
-                debug.trace(self + " generating legendary armor")
-                LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedArmor)
-            endIf
-        else
-            debug.trace(self + " generating legendary item")
-            LegendaryItemQuest.GenerateLegendaryItem(akTarget)
-        endIf
-    else
-        debug.trace(self + " skipping legendary generation because it is disabled")
-    endIf
 EndFunction
 
 Function MakeEquippedItemLegendary(Actor akTarget, Form[] aaEligibleWeapons, Form[] aaEligibleArmor)
