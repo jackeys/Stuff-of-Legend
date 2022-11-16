@@ -11,6 +11,36 @@ FormList Property WLI_FormList_IneligibleKeywords Const Auto Mandatory
 FormList Property WLI_FormList_DisallowGeneratedItemsForActorKeywords Const Auto Mandatory
 {AUTOFILL}
 
+Struct LegendaryDropMapping
+	FormList ActorKeywords
+	{Keywords to look for on the actor receiving a legendary drop}
+	LeveledItem DroppedItem
+	{The list of items to choose from if the actor has an above keyword}
+	bool AttachLegendaryMod = false
+	{Whether or not to attach a legendary mod to the dropped item}
+EndStruct
+
+LegendaryDropMapping[] Property LegendaryDropTypes Const Auto Mandatory
+{If a legendary item is generated for an actor, these mappings will override the standard list of items to spawn}
+
+FormList Property DisallowGeneratedItemsForActorKeywordList Auto Const Mandatory
+{If any of the keywords in this form list are present on the actor, it will be excluded from generating items if it doesn't have eligible equipment}
+
+GlobalVariable Property StrictlyEnforceWeaponChanceWhenEquipmentUnavailable Auto Const Mandatory
+{This boolean global variable indicates if the weapon chance should be used to manually generate weapons/armor instead of using the game's base list. May affect mod compatibility}
+
+GlobalVariable Property LegendaryWeaponChance Auto Const Mandatory
+{The chance that the enemy's weapon will be selected as the legendary item instead of their armor}
+
+LeveledItem Property GeneratedWeapon Auto Const Mandatory
+{The weapon list to use to generate weapons if the chance is rolled}
+
+LeveledItem Property GeneratedArmor Auto Const Mandatory
+{The armor list to use to generate armors if the chance is rolled}
+
+GlobalVariable Property GenerateNewItemIfNoneFound Auto Const Mandatory
+{This boolean global determines if a brand new item should be created from the standard legendary drop lists if there are no items in the reference's inventory that can be made legendary}
+
 bool Property DogArmorEnabled = false Auto
 Keyword Property DogArmorKeyword Const Auto Mandatory
 
@@ -165,6 +195,49 @@ Function UpdateFormList(bool abEnabled, FormList akList, Form akKeyword)
 			akList.RemoveAddedForm(akKeyword)
 		endIf
 	EndIf
+EndFunction
+
+; Leveled list will be overridden if the ObjectToSpawnIn has any of the keywords from LegendaryDropTypes
+ObjectReference Function GenerateLegendaryItem(ObjectReference ObjectToSpawnIn)
+	if ObjectToSpawnIn.HasKeywordInFormList(DisallowGeneratedItemsForActorKeywordList)
+        debug.trace(self + " skipping legendary generation because " + ObjectToSpawnIn + " has a disallowed keyword from " + DisallowGeneratedItemsForActorKeywordList)
+		return None
+	endIf
+
+	int i = 0
+	while (i < LegendaryDropTypes.length)
+		LegendaryDropMapping mapping = LegendaryDropTypes[i]
+		if ObjectToSpawnIn.HasKeywordInFormList(mapping.ActorKeywords)
+			if mapping.AttachLegendaryMod
+				debug.trace(self + " found legendary mapping for " + ObjectToSpawnIn + " from " + mapping.ActorKeywords + " - attaching legendary mod")
+				return LegendaryItemQuest.GenerateLegendaryItem(ObjectToSpawnIn, mapping.DroppedItem)
+			else
+				debug.trace(self + " found legendary mapping for " + ObjectToSpawnIn + " from " + mapping.ActorKeywords + " - adding item to inventory")
+				ObjectToSpawnIn.AddItem(mapping.DroppedItem, 1, true)
+				return None
+			EndIf
+		endIf
+		i += 1
+	EndWhile
+
+	if GenerateNewItemIfNoneFound.GetValueInt() > 0
+        if StrictlyEnforceWeaponChanceWhenEquipmentUnavailable.GetValueInt() > 0
+            if Utility.RandomInt(1, 100) <= LegendaryWeaponChance.GetValueInt()
+                debug.trace(self + " generating a legendary weapon")
+                LegendaryItemQuest.GenerateLegendaryItem(ObjectToSpawnIn, GeneratedWeapon)
+            else
+                debug.trace(self + " generating legendary armor")
+                LegendaryItemQuest.GenerateLegendaryItem(ObjectToSpawnIn, GeneratedArmor)
+            endIf
+        else
+            debug.trace(self + " generating legendary item")
+            LegendaryItemQuest.GenerateLegendaryItem(ObjectToSpawnIn)
+        endIf
+    else
+        debug.trace(self + " skipping legendary generation because it is disabled")
+    endIf
+
+	return None
 EndFunction
 
 bool Function AddLegendaryMod(ObjectReference akRecipient, Form  item, FormList ListOfSpecificModsToChooseFrom = None, FormList ListOfSpecificModsToDisallow = None)
