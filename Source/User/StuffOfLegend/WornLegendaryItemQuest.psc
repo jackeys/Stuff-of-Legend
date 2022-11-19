@@ -10,6 +10,8 @@ FormList Property WLI_FormList_IneligibleKeywords Const Auto Mandatory
 {AUTOFILL}
 FormList Property WLI_FormList_DisallowGeneratedItemsForActorKeywords Const Auto Mandatory
 {AUTOFILL}
+FormList Property SOL_FormList_ActorKeywords_DropType_Organ_Animal Const Auto Mandatory
+{AUTOFILL}
 
 Struct LegendaryDropMapping
 	FormList ActorKeywords
@@ -170,10 +172,13 @@ Function DetectOtherMods()
 	Keyword ActorTypeGulper = Game.GetFormFromFile(0x000270C0, "DLCCoast.esm") as Keyword
 	
 	if ActorTypeAngler || ActorTypeFogCrawler || ActorTypeGulper
-		debug.trace(self + " detected Far Harbor, checking if any actor types should be disallowed from generating legendary items")
+		debug.trace(self + " detected Far Harbor, adding actor types to formlists")
 		UpdateDisallowedActorFormList(LegendaryFarHarborAnglerDropsEnabled, ActorTypeAngler)
 		UpdateDisallowedActorFormList(LegendaryFarHarborFogCrawlerDropsEnabled, ActorTypeFogCrawler)
 		UpdateDisallowedActorFormList(LegendaryFarHarborGulperDropsEnabled, ActorTypeGulper)
+		UpdateFormList(true, SOL_FormList_ActorKeywords_DropType_Organ_Animal, ActorTypeAngler)
+		UpdateFormList(true, SOL_FormList_ActorKeywords_DropType_Organ_Animal, ActorTypeFogCrawler)
+		UpdateFormList(true, SOL_FormList_ActorKeywords_DropType_Organ_Animal, ActorTypeGulper)
 	endIf
 		
 EndFunction
