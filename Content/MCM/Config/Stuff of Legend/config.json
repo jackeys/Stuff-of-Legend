@@ -115,6 +115,1277 @@
     ],
     "pages": [
         {
+            "pageDisplayName": "Effects - Armor",
+            "content": [
+                {
+                    "text": "Far Harbor Installed",
+                    "type": "switcher",
+                    "help": "Global variable DLCcoastLoaded",
+                    "valueOptions": {
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "DLCCoast.esm|800"
+                    },
+                    "groupCondition": 99,
+                    "groupControl": 1
+                },
+                {
+                    "text": "SPECIAL Stats",
+                    "type": "section"
+                },
+                {
+                    "text": "Cunning",
+                    "type": "switcher",
+                    "help": "+1 Agility and +1 Perception",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "CunningArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Fortifying",
+                    "type": "switcher",
+                    "help": "+1 Strength and Endurance",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FortifyingArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Lucky",
+                    "type": "switcher",
+                    "help": "+2 Luck",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "LuckyArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Rad Powered (Chest Only)",
+                    "type": "switcher",
+                    "help": "Grants additional Strength the higher your rads",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHRadPoweredArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Sharp",
+                    "type": "switcher",
+                    "help": "+1 Charisma and +1 Intelligence",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "SharpArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Unyielding (Chest Only)",
+                    "type": "switcher",
+                    "help": "+3 to all stats when you are at 25% or less health",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHUnyieldingArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Damage Reduction By Enemy Type",
+                    "type": "section"
+                },
+                {
+                    "text": "Assassin's",
+                    "type": "switcher",
+                    "help": "Reduces damage from humans by 15%",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "AssassinsArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Exterminator's",
+                    "type": "switcher",
+                    "help": "Reduces damage from bugs by 15%",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "ExterminatorsArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Ghoul Slayer's",
+                    "type": "switcher",
+                    "help": "Reduces damage from ghouls by 15%",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "GhoulSlayersArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Hunter's",
+                    "type": "switcher",
+                    "help": "Reduces damage from animals by 15%",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "HuntersArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Mutant Slayer's",
+                    "type": "switcher",
+                    "help": "Reduces damage from Super Mutants by 15%",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "MutantSlayersArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Troubleshooter's",
+                    "type": "switcher",
+                    "help": "Reduces damage from robots by 15%",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "TroubleshootersArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Other Damage Reduction",
+                    "type": "section"
+                },
+                {
+                    "text": "Bolstering",
+                    "type": "switcher",
+                    "help": "Grants increasing energy and damage resistance the lower your Health (up to +35)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "BolsteringArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Cavalier's",
+                    "type": "switcher",
+                    "help": "Reduces damage while blocking or sprinting by 15%",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "CavaliersArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Poisoner's",
+                    "type": "switcher",
+                    "help": "+25 poison resistance",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "PoisonersArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Sentinel's",
+                    "type": "switcher",
+                    "help": "Reduces damage while standing and not moving by 15%",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "SentinelsArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Melee",
+                    "type": "section"
+                },
+                {
+                    "text": "Cloaking (Chest Only)",
+                    "type": "switcher",
+                    "help": "Being hit in melee generates a Stealth Field once per 60 seconds",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHCloakingArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Cryogenic (Chest Only)",
+                    "type": "switcher",
+                    "help": "10% chance to freeze melee attackers, once every 20 seconds",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHCryogenicArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Duelist's",
+                    "type": "switcher",
+                    "help": "10% chance to disarm melee attacker on hit",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "DuelistsArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Incendiary (Chest Only)",
+                    "type": "switcher",
+                    "help": "30% chance to ignite melee attackers, once every 20 seconds",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHIncendiaryArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Punishing",
+                    "type": "switcher",
+                    "help": "Reflects 10% of melee damage back on attacker",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "PunishingArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Miscellaneous",
+                    "type": "section"
+                },
+                {
+                    "text": "Acrobat's (Legs Only)",
+                    "type": "switcher",
+                    "help": "Reduces falling damage by 50%",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "AcrobatsArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Auto Stim (Chest Only)",
+                    "type": "switcher",
+                    "help": "Automatically use a stimpak when hit while health is 25% or less, once every 60 seconds",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHAutoStimArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Chameleon",
+                    "type": "switcher",
+                    "help": "Enemies have a harder time detecting you while you're sneaking and not moving",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "ChameleonArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Martyr's (Chest Only)",
+                    "type": "switcher",
+                    "help": "Temporarily slows time down during combat when you are at 20% or less Health",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "MartyrsArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Powered",
+                    "type": "switcher",
+                    "help": "Increases Action Point refresh speed",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "PoweredArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Safecracker's",
+                    "type": "switcher",
+                    "help": "Increases size of sweet spot while picking locks",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "SafecrackersArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Sprinter's (Legs Only)",
+                    "type": "switcher",
+                    "help": "Increases movement speed by 10%",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "SprintersArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "VATS Enhanced",
+                    "type": "switcher",
+                    "help": "10% reduction in Action Point cost in V.A.T.S.",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "VATSEnhancedArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                }
+            ]
+        },
+        {
+            "pageDisplayName": "Effects - Weapons",
+            "content": [
+                {
+                    "text": "Far Harbor Installed",
+                    "type": "switcher",
+                    "help": "Global variable DLCcoastLoaded",
+                    "valueOptions": {
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "DLCCoast.esm|800"
+                    },
+                    "groupCondition": 99,
+                    "groupControl": 1
+                },
+                {
+                    "text": "Damage Increase By Enemy Type",
+                    "type": "section"
+                },
+                {
+                    "text": "Assassin's",
+                    "type": "switcher",
+                    "help": "Does 50% more damage against humans",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "AssassinsWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Exterminator's",
+                    "type": "switcher",
+                    "help": "Does 50% more damage against bugs",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "ExterminatorsWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Ghoul Slayer's",
+                    "type": "switcher",
+                    "help": "Does 50% more damage against ghouls",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "GhoulSlayersWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Hunter's",
+                    "type": "switcher",
+                    "help": "Does 50% more damage against animals",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "HuntersWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Mutant Slayer's",
+                    "type": "switcher",
+                    "help": "Does 50% more damage against Super Mutants",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "MutantSlayersWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Troubleshooter's",
+                    "type": "switcher",
+                    "help": "Does 50% more damage against robots",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "TroubleshootersWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Additional Damage Types",
+                    "type": "section"
+                },
+                {
+                    "text": "Explosive (Ballistic Weapons Only)",
+                    "type": "switcher",
+                    "help": "Bullets explode on impact doing 15 points area-of-effect damage",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "ExplosiveBulletsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Freezing",
+                    "type": "switcher",
+                    "help": "Does 10 points cryo damage and will freeze targets on critical hits",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FreezingWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Incendiary (Ballistic Weapons Only)",
+                    "type": "switcher",
+                    "help": "Sets target on fire for 15 points of damage",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "IncendiaryBulletsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Irradiated",
+                    "type": "switcher",
+                    "help": "Does 50 points additional radiation damage",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "IrradiatedWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Plasma-Infused (Ballistic Weapons Only)",
+                    "type": "switcher",
+                    "help": "Adds 10 points of energy damage and can turn enemies into goo",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "PlasmaBulletsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Poisoner's",
+                    "type": "switcher",
+                    "help": "Target is poisoned for 10 seconds (3 points poison damage per second)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "PoisonersWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Wounding",
+                    "type": "switcher",
+                    "help": "Targets bleed for 25 points of additional damage, spread over 5 seconds",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "WoundingWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Other Damage Increases",
+                    "type": "section"
+                },
+                {
+                    "text": "Berserker's (Melee Only)",
+                    "type": "switcher",
+                    "help": "Does more damage the lower the player character's Armor Resistance (up to 200% at 0 resistance)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "BerserkersMeleeEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Bloodied (Melee Only)",
+                    "type": "switcher",
+                    "help": "Does more damage the lower the user's health is (5% damage per 5% health lost, up to +95% damage at 5% HP)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "BloodiedMeleeEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Defiant (Guns Only)",
+                    "type": "switcher",
+                    "help": "The final shot in the magazine deals twice the normal damage",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHDefiantGunEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Furious (Melee Only)",
+                    "type": "switcher",
+                    "help": "Damage increased by 15% after each consecutive hit on the same target",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FuriousMeleeEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Hitman's (Guns Only)",
+                    "type": "switcher",
+                    "help": "Does 10% more damage when looking down the sights",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHHitmansGunEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Instigating",
+                    "type": "switcher",
+                    "help": "Does double damage if the target is at full health",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "InstigatingWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Junkie's",
+                    "type": "switcher",
+                    "help": "Does 15% more damage for each addiction the Sole Survivor has",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "JunkiesWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Nocturnal",
+                    "type": "switcher",
+                    "help": "Does increasing amounts of damage as the night grows longer and less damage during the day",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "NocturnalWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Penetrating",
+                    "type": "switcher",
+                    "help": "Ignores 30% of the target's damage and energy resistance",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "PenetratingWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Powerful",
+                    "type": "switcher",
+                    "help": "Provides 25% more damage",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "PowerfulWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Two Shot (Guns Only)",
+                    "type": "switcher",
+                    "help": "Fires an additional projectile, but has +25% more recoil",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "TwoShotWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Violent (Ballistic Weapons Only)",
+                    "type": "switcher",
+                    "help": "Deals +25% damage and limb damage, but has +25% more recoil",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "ViolentBulletsEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Critical Hits",
+                    "type": "section"
+                },
+                {
+                    "text": "Enraging",
+                    "type": "switcher",
+                    "help": "Critical hits cause target to frenzy",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "EnragingWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Lucky",
+                    "type": "switcher",
+                    "help": "Critical shots do double damage and the critical meter fills 15% faster",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "LuckyWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Relentless",
+                    "type": "switcher",
+                    "help": "Refills Action Points on a critical hit",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "RelentlessWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "VATS",
+                    "type": "section"
+                },
+                {
+                    "text": "Quickdraw",
+                    "type": "switcher",
+                    "help": "Costs 25% fewer Action Points",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "QuickdrawWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Stalker's (Guns Only)",
+                    "type": "switcher",
+                    "help": "If not yet in combat, 100% increased V.A.T.S. accuracy, but costs 50% more AP",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "StalkersGunEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "VATS Enhanced (Guns)",
+                    "type": "switcher",
+                    "help": "+33% V.A.T.S. hit chance, 25% less Action Point cost",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "VATSEnhancedGunEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "VATS Enhanced (Melee)",
+                    "type": "switcher",
+                    "help": "40% less Action Point cost",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "VATSEnhancedMeleeEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Increased Defense",
+                    "type": "section"
+                },
+                {
+                    "text": "Cavalier's (Melee Only)",
+                    "type": "switcher",
+                    "help": "Reduces damage by 15% while blocking or sprinting",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "CavaliersWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Resilient (Guns Only)",
+                    "type": "switcher",
+                    "help": "+150 damage resistance while reloading",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHResilientGunEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Sentinel's (Melee Only)",
+                    "type": "switcher",
+                    "help": "Take 15% less damage while standing and not moving",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "SentinelsWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Steadfast (Guns Only)",
+                    "type": "switcher",
+                    "help": "+50 damage resistance while aiming",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHSteadfastGunEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Melee Blocking",
+                    "type": "section",
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Blazing (Melee Only)",
+                    "type": "switcher",
+                    "help": "Blocking has a 25% chance to set attackers on fire for 50 damage",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHBlazingMeleeEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Charged (Melee Only)",
+                    "type": "switcher",
+                    "help": "10% chance to deal 100 Electrical damage on a successful block",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHChargedMeleeEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Duelist's (Melee Only)",
+                    "type": "switcher",
+                    "help": "25% chance to disarm attackers on a successful block",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHDuelistsMeleeEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Frigid (Melee Only)",
+                    "type": "switcher",
+                    "help": "20% chance to freeze the enemy when blocking attacks",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHFrigidMeleeEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Miscellaneous",
+                    "type": "section"
+                },
+                {
+                    "text": "Automatic Laser Musket",
+                    "type": "switcher",
+                    "help": "Automatic fire mode",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "AutomaticLaserMusketEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Crippling",
+                    "type": "switcher",
+                    "help": "50% more limb damage",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "CripplingWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Deadeye (Guns Only)",
+                    "type": "switcher",
+                    "help": "Time slows down for a moment while aiming",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHDeadeyeGunEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Kneecapper",
+                    "type": "switcher",
+                    "help": "20% chance to cripple the target's leg",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "KneecapperWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Neverending",
+                    "type": "switcher",
+                    "help": "Unlimited ammo capacity",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "NeverendingWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Nimble (Guns Only)",
+                    "type": "switcher",
+                    "help": "Provides 75% faster movement while aiming",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "NimbleGunEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Rapid (Guns Only)",
+                    "type": "switcher",
+                    "help": "25% faster fire rate, 15% faster reload",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "RapidGunEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                },
+                {
+                    "text": "Resolute (Guns Only)",
+                    "type": "switcher",
+                    "help": "Slows time momentarily as the last round is chambered",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "FHResoluteGunEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    },
+                    "groupCondition": 1
+                },
+                {
+                    "text": "Staggering",
+                    "type": "switcher",
+                    "help": "Chance to stagger on hit",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|152",
+                        "propertyName": "StaggeringWeaponEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|152",
+                        "function": "UpdateLegendaryModRules"
+                    }
+                }
+            ]
+        },
+        {
             "pageDisplayName": "Eligible Equipment",
             "content": [
                 {
