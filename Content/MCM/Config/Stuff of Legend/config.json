@@ -4,9 +4,9 @@
     "minMcmVersion": 2,
     "content": [
         {
-            "text": "Chance of the enemy's weapon being made legendary",
+            "text": "Legendary Weapon Chance (Instead of Armor)",
             "type": "slider",
-            "help": "The percent chance that the enemy's weapon is chosen as the legendary item instead of a piece of their armor",
+            "help": "The percent chance that a legendary item or mod will be a weapon instead of armor. Does not affect trunks.",
             "valueOptions": {
                 "min": 0,
                 "max": 100,
