@@ -179,7 +179,7 @@ Form[] Function GetEligibleInventoryItems(Actor akActor, FormList akAllowedKeywo
     while(i < inventory.length)
         Form  item = inventory[i]
 
-        if (item.HasKeywordInFormList(akAllowedKeywords) && !item.HasKeywordInFormList(ExcludeKeywordsList)) || item.HasKeywordInFormList(AlwaysAllowedKeywordsList)
+        if item.HasKeywordInFormList(akAllowedKeywords) && (!item.HasKeywordInFormList(ExcludeKeywordsList) || item.HasKeywordInFormList(AlwaysAllowedKeywordsList))
             eligibleEquipment.Add(item)
         endif
 
