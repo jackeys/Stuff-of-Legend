@@ -8,8 +8,6 @@ FormList Property WLI_FormList_AlwaysAllowedKeywords Const Auto Mandatory
 {AUTOFILL}
 FormList Property WLI_FormList_IneligibleKeywords Const Auto Mandatory
 {AUTOFILL}
-FormList Property WLI_FormList_DisallowGeneratedItemsForActorKeywords Const Auto Mandatory
-{AUTOFILL}
 FormList Property SOL_FormList_ActorKeywords_DropType_Organ_Animal Const Auto Mandatory
 {AUTOFILL}
 
@@ -24,9 +22,6 @@ EndStruct
 
 LegendaryDropMapping[] Property LegendaryDropTypes Const Auto Mandatory
 {If a legendary item is generated for an actor, these mappings will override the standard list of items to spawn}
-
-FormList Property DisallowGeneratedItemsForActorKeywordList Auto Const Mandatory
-{If any of the keywords in this form list are present on the actor, it will be excluded from generating items if it doesn't have eligible equipment}
 
 GlobalVariable Property StrictlyEnforceWeaponChanceWhenEquipmentUnavailable Auto Const Mandatory
 {This boolean global variable indicates if the weapon chance should be used to manually generate weapons/armor instead of using the game's base list. May affect mod compatibility}
@@ -64,39 +59,6 @@ Keyword Property PowerArmorKeyword Const Auto Mandatory
 ; This is specifically inverted for MCM, since there is something we want to display only when Power Armor to the People is not detected
 bool Property PAttPNotDetected = true Auto
 
-; Creature types to allow legendary drops for
-
-bool Property LegendaryAnimalDropsEnabled = true Auto
-Keyword Property AnimalActorKeyword Const Auto Mandatory
-
-bool Property LegendaryBugDropsEnabled = true Auto
-Keyword Property BugActorKeyword Const Auto Mandatory
-
-bool Property LegendaryDeathclawDropsEnabled = true Auto
-Keyword Property DeathclawActorKeyword Const Auto Mandatory
-
-bool Property LegendaryFeralGhoulDropsEnabled = true Auto
-Keyword Property FeralGhoulActorKeyword Const Auto Mandatory
-
-bool Property LegendaryMirelurkDropsEnabled = true Auto
-Keyword Property MirelurkActorKeyword Const Auto Mandatory
-
-bool Property LegendaryMirelurkKingDropsEnabled = true Auto
-Keyword Property MirelurkKingActorKeyword Const Auto Mandatory
-
-bool Property LegendaryMirelurkQueenDropsEnabled = true Auto
-Keyword Property MirelurkQueenActorKeyword Const Auto Mandatory
-
-bool Property LegendaryRadScorpionDropsEnabled = true Auto
-Keyword Property RadScorpionActorKeyword Const Auto Mandatory
-
-bool Property LegendaryRobotDropsEnabled = true Auto
-Keyword Property RobotActorKeyword Const Auto Mandatory
-
-bool Property LegendaryFarHarborAnglerDropsEnabled = true Auto
-bool Property LegendaryFarHarborFogCrawlerDropsEnabled = true Auto
-bool Property LegendaryFarHarborGulperDropsEnabled = true Auto
-
 ; Used to help spread out the legendary effects that are used
 ObjectMod[] PreviouslySpawnedMods
 
@@ -128,21 +90,6 @@ Function RefreshAllowedKeywords()
     if PAttPNotDetected
         UpdateFormList(PowerArmorEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, PowerArmorKeyword)
     endIf
-
-    UpdateDisallowedActorFormList(LegendaryAnimalDropsEnabled, AnimalActorKeyword)
-    UpdateDisallowedActorFormList(LegendaryBugDropsEnabled, BugActorKeyword)
-    UpdateDisallowedActorFormList(LegendaryDeathclawDropsEnabled, DeathclawActorKeyword)
-    UpdateDisallowedActorFormList(LegendaryFeralGhoulDropsEnabled, FeralGhoulActorKeyword)
-    UpdateDisallowedActorFormList(LegendaryMirelurkDropsEnabled, MirelurkActorKeyword)
-    UpdateDisallowedActorFormList(LegendaryMirelurkKingDropsEnabled, MirelurkKingActorKeyword)
-    UpdateDisallowedActorFormList(LegendaryMirelurkQueenDropsEnabled, MirelurkQueenActorKeyword)
-    UpdateDisallowedActorFormList(LegendaryRadScorpionDropsEnabled, RadScorpionActorKeyword)
-    UpdateDisallowedActorFormList(LegendaryRobotDropsEnabled, RobotActorKeyword)
-EndFunction
-
-Function UpdateDisallowedActorFormList(bool abEnabled, Keyword akKeyword)
-	; Invert whether it's enabled, since we want to inject the form if an actor is not allowed
-	UpdateFormList(!abEnabled, WLI_FormList_DisallowGeneratedItemsForActorKeywords, akKeyword)
 EndFunction
 
 Function DetectOtherMods()
@@ -173,9 +120,6 @@ Function DetectOtherMods()
 	
 	if ActorTypeAngler || ActorTypeFogCrawler || ActorTypeGulper
 		debug.trace(self + " detected Far Harbor, adding actor types to formlists")
-		UpdateDisallowedActorFormList(LegendaryFarHarborAnglerDropsEnabled, ActorTypeAngler)
-		UpdateDisallowedActorFormList(LegendaryFarHarborFogCrawlerDropsEnabled, ActorTypeFogCrawler)
-		UpdateDisallowedActorFormList(LegendaryFarHarborGulperDropsEnabled, ActorTypeGulper)
 		UpdateFormList(true, SOL_FormList_ActorKeywords_DropType_Organ_Animal, ActorTypeAngler)
 		UpdateFormList(true, SOL_FormList_ActorKeywords_DropType_Organ_Animal, ActorTypeFogCrawler)
 		UpdateFormList(true, SOL_FormList_ActorKeywords_DropType_Organ_Animal, ActorTypeGulper)
@@ -204,11 +148,6 @@ EndFunction
 
 ; Leveled list will be overridden if the ObjectToSpawnIn has any of the keywords from LegendaryDropTypes
 ObjectReference Function GenerateLegendaryItem(ObjectReference ObjectToSpawnIn)
-	if ObjectToSpawnIn.HasKeywordInFormList(DisallowGeneratedItemsForActorKeywordList)
-        debug.trace(self + " skipping legendary generation because " + ObjectToSpawnIn + " has a disallowed keyword from " + DisallowGeneratedItemsForActorKeywordList)
-		return None
-	endIf
-
 	int i = 0
 	while (i < LegendaryDropTypes.length)
 		LegendaryDropMapping mapping = LegendaryDropTypes[i]
