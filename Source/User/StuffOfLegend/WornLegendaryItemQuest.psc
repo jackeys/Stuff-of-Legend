@@ -23,9 +23,6 @@ EndStruct
 LegendaryDropMapping[] Property LegendaryDropTypes Const Auto Mandatory
 {If a legendary item is generated for an actor, these mappings will override the standard list of items to spawn}
 
-GlobalVariable Property StrictlyEnforceWeaponChanceWhenEquipmentUnavailable Auto Const Mandatory
-{This boolean global variable indicates if the weapon chance should be used to manually generate weapons/armor instead of using the game's base list. May affect mod compatibility}
-
 GlobalVariable Property LegendaryWeaponChance Auto Const Mandatory
 {The chance that the enemy's weapon will be selected as the legendary item instead of their armor}
 
@@ -213,9 +210,9 @@ Function MakeEquippedItemLegendary(Actor akTarget, Form[] aaEligibleWeapons, For
         EndIf
     endIf
     
-    if !success && GenerateNewItemIfNoneFound.GetValueInt() > 0
-        debug.trace(self + " generating legendary item because converting an equipped one failed")
-        LegendaryItemQuest.GenerateLegendaryItem(akTarget)
+    if !success
+        debug.trace(self + " falling back to generating a legendary item because no equipped items could be converted")
+        GenerateLegendaryItem(akTarget)
     EndIf
 EndFunction
 
@@ -295,20 +292,10 @@ ObjectReference Function GenerateLegendaryItem(ObjectReference ObjectToSpawnIn)
 	EndWhile
 
 	if GenerateNewItemIfNoneFound.GetValueInt() > 0
-        if StrictlyEnforceWeaponChanceWhenEquipmentUnavailable.GetValueInt() > 0
-            if Utility.RandomInt(1, 100) <= LegendaryWeaponChance.GetValueInt()
-                debug.trace(self + " generating a legendary weapon")
-                LegendaryItemQuest.GenerateLegendaryItem(ObjectToSpawnIn, GeneratedWeapon)
-            else
-                debug.trace(self + " generating legendary armor")
-                LegendaryItemQuest.GenerateLegendaryItem(ObjectToSpawnIn, GeneratedArmor)
-            endIf
-        else
-            debug.trace(self + " generating legendary item")
-            LegendaryItemQuest.GenerateLegendaryItem(ObjectToSpawnIn)
-        endIf
+		debug.trace(self + " generating legendary item because enemy type is unrecognized")
+		LegendaryItemQuest.GenerateLegendaryItem(ObjectToSpawnIn)
     else
-        debug.trace(self + " skipping legendary generation because it is disabled")
+        debug.trace(self + " skipping legendary generation for unrecognized enemy type because it is disabled")
     endIf
 
 	return None

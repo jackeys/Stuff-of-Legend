@@ -16,100 +16,12 @@
             }
         },
         {
-            "text": "Chance of adding a new legendary weapon",
-            "type": "slider",
-            "help": "The percent chance that if the enemy's weapon is going to be made legendary, it will be a new weapon from the legendary leveled lists",
-            "valueOptions": {
-                "min": 0,
-                "max": 100,
-                "step": 1,
-                "sourceType": "GlobalValue",
-                "sourceForm": "Stuff of Legend.esp|006"
-            }
-        },
-        {
-            "text": "Chance of adding a new legendary armor piece",
-            "type": "slider",
-            "help": "The percent chance that if the enemy's armor is going to be made legendary, it will be new armor from the legendary leveled lists",
-            "valueOptions": {
-                "min": 0,
-                "max": 100,
-                "step": 1,
-                "sourceType": "GlobalValue",
-                "sourceForm": "Stuff of Legend.esp|007"
-            }
-        },
-        {
-            "text": "Add a new legendary item if no equipment can be made legendary",
+            "text": "Fallback to creating legendary weapons and armor for unrecognized enemies",
             "type": "switcher",
-            "help": "Necessary to continue adding legendary items for legendary creatures and robots",
+            "help": "If an enemy type isn't recognized by the mod, add a legendary item like the base game would",
             "valueOptions": {
                 "sourceType": "GlobalValue",
                 "sourceForm": "Stuff of Legend.esp|001"
-            },
-            "groupControl": 1
-        },
-        {
-            "type": "spacer",
-            "numLines": 1
-        },
-        {
-            "text": "Advanced Options",
-            "type": "section"
-        },
-        {
-            "text": "Strictly enforce legendary weapon chance for NPCs",
-            "type": "switcher",
-            "help": "If an equipped weapon should be made legendary but none are eligible, generate a new one instead of making legendary armor",
-            "valueOptions": {
-                "sourceType": "GlobalValue",
-                "sourceForm": "Stuff of Legend.esp|009"
-            }
-        },
-        {
-            "text": "Strictly enforce legendary weapon chance for creatures/robots",
-            "type": "switcher",
-            "help": "Use the configured weapon chance for generated legendaries instead of the base game's chances",
-            "valueOptions": {
-                "sourceType": "GlobalValue",
-                "sourceForm": "Stuff of Legend.esp|00D"
-            },
-            "groupCondition": 1
-        },
-        {
-            "type": "spacer",
-            "numLines": 1
-        },
-        {
-            "text": "Turning It Up to 11",
-            "type": "section"
-        },
-        {
-            "text": "These settings may drastically alter the game's balance or could result in enemies visually unequipping and equipping their armor shortly after you see them. They can be fun, but use at your own discretion.",
-            "type": "text"
-        },
-        {
-            "text": "Maximum number of legendary items per legendary enemy",
-            "type": "slider",
-            "help": "A random number of legendaries between 1 and this value will be added to each legendary enemy",
-            "valueOptions": {
-                "min": 1,
-                "max": 3,
-                "step": 1,
-                "sourceType": "GlobalValue",
-                "sourceForm": "Stuff of Legend.esp|00A"
-            }
-        },
-        {
-            "text": "Chance of normal enemies getting legendary items",
-            "type": "slider",
-            "help": "Useful if you are using mods that give normal and legendary enemies different equipment",
-            "valueOptions": {
-                "min": 0,
-                "max": 10,
-                "step": 1,
-                "sourceType": "GlobalValue",
-                "sourceForm": "Stuff of Legend.esp|008"
             }
         }
     ],
@@ -1386,8 +1298,45 @@
             ]
         },
         {
-            "pageDisplayName": "Eligible Equipment",
+            "pageDisplayName": "Equipment",
             "content": [
+                {
+                    "text": "Chance of adding a new legendary weapon",
+                    "type": "slider",
+                    "help": "The percent chance that if the enemy's weapon is going to be made legendary, it will be a new weapon from the legendary leveled lists",
+                    "valueOptions": {
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|006"
+                    }
+                },
+                {
+                    "text": "Chance of adding a new legendary armor piece",
+                    "type": "slider",
+                    "help": "The percent chance that if the enemy's armor is going to be made legendary, it will be new armor from the legendary leveled lists",
+                    "valueOptions": {
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|007"
+                    }
+                },
+                {
+                    "text": "Strictly enforce legendary weapon chance",
+                    "type": "switcher",
+                    "help": "If an equipped weapon should be made legendary but none are eligible, generate a new one instead of making legendary armor",
+                    "valueOptions": {
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|009"
+                    }
+                },
+                {
+                    "text": "Eligible Equipment",
+                    "type": "section"
+                },
                 {
                     "text": "Enemies are able to wear more types of equipment than can normally become legendary. By default, this equipment will never be made legendary, but these settings allow you to make them eligible. Note that many of these items likely do not have naming rules for legendary effects, so you will have to read their description to know what the effect does.",
                     "type": "text"
@@ -1534,6 +1483,39 @@
                         "step": 1,
                         "sourceType": "GlobalValue",
                         "sourceForm": "Stuff of Legend.esp|010"
+                    }
+                }
+            ]
+        },
+        {
+            "pageDisplayName": "Experimental",
+            "content": [
+                {
+                    "text": "These settings may drastically alter the game's balance or could result in enemies visually unequipping and equipping their armor shortly after you see them. They can be fun, but use at your own discretion.",
+                    "type": "text"
+                },
+                {
+                    "text": "Maximum number of legendary items per legendary enemy",
+                    "type": "slider",
+                    "help": "A random number of legendaries between 1 and this value will be added to each legendary enemy",
+                    "valueOptions": {
+                        "min": 1,
+                        "max": 3,
+                        "step": 1,
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|00A"
+                    }
+                },
+                {
+                    "text": "Chance of normal enemies getting legendary items",
+                    "type": "slider",
+                    "help": "Useful if you are using mods that give normal and legendary enemies different equipment",
+                    "valueOptions": {
+                        "min": 0,
+                        "max": 10,
+                        "step": 1,
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|008"
                     }
                 }
             ]
