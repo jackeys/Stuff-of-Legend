@@ -10,11 +10,7 @@ EndStruct
 LegendaryItemQuestScript Property LegendaryItemQuest const auto mandatory
 {Autofill}
 
-LeveledItem Property ArmorItemInjectionSite const auto mandatory
-{The leveled item to inject items associated with legendary effects for armor into when they are enabled}
-
-LeveledItem Property WeaponItemInjectionSite const auto mandatory
-{The leveled item to inject items associated with legendary effects for weapons into when they are enabled}
+StuffOfLegend:WornLegendaryItemQuest Property WornLegendaryItemQuest Const Auto Mandatory
 
 ; Weapons
 bool Property LuckyWeaponEnabled = true Auto
@@ -337,8 +333,6 @@ Event OnInit()
 EndEvent
 
 Function UpdateLegendaryModRules()
-	RevertLegendaryItemLists()
-
     ; Armor
 	UpdateArmorModEnabled("Cunning (Armor)", CunningArmorEnabled, CunningArmorModRule, CunningArmorModItem)
 	UpdateArmorModEnabled("Sharp (Armor)", SharpArmorEnabled, SharpArmorModRule, SharpArmorModItem)
@@ -427,34 +421,48 @@ EndFunction
 Function UpdateArmorModEnabled(string asName, bool abEnabled, LegendaryItemQuestScript:LegendaryModRule akRule, MiscObject akItem)
 	UpdateModRule(asName, abEnabled, akRule)
 
-	if abEnabled && akItem
-		InjectModItem(ArmorItemInjectionSite, akItem)
+	if akItem
+		UpdateModItem(asName, abEnabled, akItem, WornLegendaryItemQuest.LegendaryArmorModDropList)
 	EndIf
 EndFunction
 
 Function UpdateWeaponModEnabled(string asName, bool abEnabled, LegendaryItemQuestScript:LegendaryModRule akRule, MiscObject akItem)
 	UpdateModRule(asName, abEnabled, akRule)
 
-	if abEnabled && akItem
-		InjectModItem(WeaponItemInjectionSite, akItem)
+	if akItem
+		UpdateModItem(asName, abEnabled, akItem, WornLegendaryItemQuest.LegendaryWeaponModDropList)
 	EndIf
 EndFunction
 
 Function UpdateFarHarborArmorModEnabled(string asName, bool abEnabled, ExternalLegendaryModRule akRule, MiscObject akItem)
-	if UpdateFarHarborModRule(asName, abEnabled, akRule) && abEnabled && akItem
-		InjectModItem(ArmorItemInjectionSite, akItem)
+	if UpdateFarHarborModRule(asName, abEnabled, akRule) && akItem
+		UpdateModItem(asName, abEnabled, akItem, WornLegendaryItemQuest.LegendaryArmorModDropList)
 	EndIf
 EndFunction
 
 Function UpdateFarHarborWeaponModEnabled(string asName, bool abEnabled, ExternalLegendaryModRule akRule, MiscObject akItem)
-	if UpdateFarHarborModRule(asName, abEnabled, akRule) && abEnabled && akItem
-		InjectModItem(WeaponItemInjectionSite, akItem)
+	if UpdateFarHarborModRule(asName, abEnabled, akRule) && akItem
+		UpdateModItem(asName, abEnabled, akItem, WornLegendaryItemQuest.LegendaryWeaponModDropList)
 	EndIf
 EndFunction
 
-Function InjectModItem(LeveledItem akInjectInto, Form akItem)
-	debug.trace(self + " Injecting " + akitem + " into " + akInjectInto)
-	akInjectInto.AddForm(akItem, 1, 1)
+Function UpdateModItem(string asName, bool abEnabled, MiscObject akItem, Form[] aaItemList)
+	int index = aaItemList.Find(akItem)
+	if abEnabled
+		if index >= 0
+			debug.trace(self + " No action needed - found enabled item " + asName + " at index " + index + " of " + aaItemList)
+		else
+			debug.trace(self + " Adding enabled legendary " + asName + " | Item: " + akItem)
+			aaItemList.add(akItem)
+		endIf
+	else
+		if index < 0
+			debug.trace(self + " No action needed - disabled item " + asName + " not found")
+		else
+			debug.trace(self + " Removing disabled legendary " + asName + " from index " + index + " | Item: " + akItem)
+			aaItemList.remove(index)
+		endIf
+	EndIf
 EndFunction
 
 bool Function UpdateFarHarborModRule(string asName, bool abEnabled, ExternalLegendaryModRule akRule)
@@ -506,9 +514,4 @@ int Function FindLegendaryRule(LegendaryItemQuestScript:LegendaryModRule akRule)
 	EndWhile
 
 	return index
-EndFunction
-
-Function RevertLegendaryItemLists()
-	ArmorItemInjectionSite.Revert()
-	WeaponItemInjectionSite.Revert()
 EndFunction

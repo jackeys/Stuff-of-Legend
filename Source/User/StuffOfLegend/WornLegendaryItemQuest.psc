@@ -10,6 +10,15 @@ FormList Property WLI_FormList_IneligibleKeywords Const Auto Mandatory
 {AUTOFILL}
 FormList Property SOL_FormList_ActorKeywords_DropType_Organ_Animal Const Auto Mandatory
 {AUTOFILL}
+FormList Property SOL_FormList_ActorKeywords_DropType_Mod Const Auto Mandatory
+{AUTOFILL}
+
+Form[] Property LegendaryWeaponModDropList Auto
+{An array of all of the possible legendary mods that can be dropped by the ActorKeywords_DropType_Mod category of enemy. This is maintained as an array to allow for cycling instead of fully random selection.}
+
+Form[] Property LegendaryArmorModDropList Auto
+{An array of all of the possible legendary mods that can be dropped by the ActorKeywords_DropType_Mod category of enemy. This is maintained as an array to allow for cycling instead of fully random selection.}
+
 
 Struct LegendaryDropMapping
 	FormList ActorKeywords
@@ -75,10 +84,22 @@ Keyword Property PowerArmorKeyword Const Auto Mandatory
 bool Property PAttPNotDetected = true Auto
 
 ; Used to help spread out the legendary effects that are used
-ObjectMod[] PreviouslySpawnedMods
+ObjectMod[] PreviouslyUsedEquipmentMods
+Form[] PreviouslyDroppedLegendaryWeaponMods
+Form[] PreviouslyDroppedLegendaryArmorMods
 
 Event OnInit()
-    PreviouslySpawnedMods = new ObjectMod[0]
+	if !LegendaryArmorModDropList
+		LegendaryArmorModDropList = new Form[0]
+	endIf
+
+	if !LegendaryWeaponModDropList
+		LegendaryWeaponModDropList = new Form[0]
+	endIf
+
+    PreviouslyUsedEquipmentMods = new ObjectMod[0]
+    PreviouslyDroppedLegendaryWeaponMods = new Form[0]
+    PreviouslyDroppedLegendaryArmorMods = new Form[0]
     DetectExistingKeywords()
     DetectOtherMods()
 EndEvent
@@ -275,6 +296,13 @@ EndFunction
 
 ; Leveled list will be overridden if the ObjectToSpawnIn has any of the keywords from LegendaryDropTypes
 ObjectReference Function GenerateLegendaryItem(ObjectReference ObjectToSpawnIn)
+	; Legendary mods are a special case, so check them first
+	if ObjectToSpawnIn.HasKeywordInFormList(SOL_FormList_ActorKeywords_DropType_Mod)
+		debug.trace(self + " adding legendary mod to " + ObjectToSpawnIn + " because it has a keyword in " + SOL_FormList_ActorKeywords_DropType_Mod)
+		ObjectToSpawnIn.AddItem(GetRandomLegendaryModItem(), 1, true)
+		return None
+	endIf
+
 	int i = 0
 	while (i < LegendaryDropTypes.length)
 		LegendaryDropMapping mapping = LegendaryDropTypes[i]
@@ -301,6 +329,50 @@ ObjectReference Function GenerateLegendaryItem(ObjectReference ObjectToSpawnIn)
 	return None
 EndFunction
 
+Form Function GetRandomLegendaryModItem()
+    Form[] PreferredDrops = new Form[0]
+	Form[] LegendaryModDropList
+	Form[] PreviouslyDroppedLegendaryMods
+
+	if Utility.RandomInt(1, 100) <= LegendaryWeaponChance.GetValueInt()
+		; Choose a weapon mod
+		LegendaryModDropList = LegendaryWeaponModDropList
+		PreviouslyDroppedLegendaryMods = PreviouslyDroppedLegendaryWeaponMods
+	else
+		; Choose an armor mod
+		LegendaryModDropList = LegendaryArmorModDropList
+		PreviouslyDroppedLegendaryMods = PreviouslyDroppedLegendaryArmorMods
+	EndIf
+
+	;FIND THE MODS WE HAVEN'T SPAWNED RECENTLY
+	int i = 0
+	while (i < LegendaryModDropList.length)
+		if  PreviouslyDroppedLegendaryMods.Find(LegendaryModDropList[i]) < 0  ;not found
+			PreferredDrops.add(LegendaryModDropList[i])
+		endif
+
+		i += 1
+	endwhile
+	
+	;if we don't have anything to pick from, reset and pick from any 
+	if PreferredDrops.length == 0 && LegendaryModDropList.length > 0
+		debug.trace(self + " Couldn't find any preferable mod drops, clearing the list")
+		PreviouslyDroppedLegendaryMods.clear() 
+		PreferredDrops = LegendaryModDropList
+	endif
+
+	int max = PreferredDrops.Length
+	if max > 0
+		int dieRoll = Utility.RandomInt(0, max - 1)
+		Form legendaryMod = PreferredDrops[dieRoll]
+		PreviouslyDroppedLegendaryMods.Add(legendaryMod)
+		return legendaryMod
+	endIf
+		
+	debug.trace(self + " couldn't find any legendary mods for the enemy to drop from " + LegendaryModDropList)
+	return None
+EndFunction
+
 bool Function AddLegendaryMod(ObjectReference akRecipient, Form  item, FormList ListOfSpecificModsToChooseFrom = None, FormList ListOfSpecificModsToDisallow = None)
 	debug.trace(akRecipient + "Attaching legendary mod to inventory item " + item)
 
@@ -312,7 +384,7 @@ bool Function AddLegendaryMod(ObjectReference akRecipient, Form  item, FormList 
 	;FIND THE MODS WE HAVEN'T SPAWNED RECENTLY
 	int i = 0
 	while (i < AllowedMods.length)
-		if  PreviouslySpawnedMods.Find(AllowedMods[i]) < 0  ;not found
+		if  PreviouslyUsedEquipmentMods.Find(AllowedMods[i]) < 0  ;not found
 			PreferredMods.add(AllowedMods[i])
 		endif
 
@@ -322,7 +394,7 @@ bool Function AddLegendaryMod(ObjectReference akRecipient, Form  item, FormList 
 	;if we don't have anything to pick from, reset and pick from any 
 	if PreferredMods.length == 0 && AllowedMods.length > 0
 		debug.trace(self + " Couldn't find any preferable mods, clearing the list")
-		PreviouslySpawnedMods.clear()  ;*see note below
+		PreviouslyUsedEquipmentMods.clear()  ;*see note below
 		PreferredMods = AllowedMods
 	endif
 
@@ -340,7 +412,7 @@ bool Function AddLegendaryMod(ObjectReference akRecipient, Form  item, FormList 
 		success = akRecipient.AttachModToInventoryItem(item, legendaryMod)
 
 		if success
-		    PreviouslySpawnedMods.Add(legendaryMod)
+		    PreviouslyUsedEquipmentMods.Add(legendaryMod)
         else
 			debug.trace(akRecipient + " Failed to attach " + legendaryMod + " to "+ item)
 		endif
