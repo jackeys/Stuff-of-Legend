@@ -1,7 +1,7 @@
 Scriptname StuffOfLegend:LegendaryCreatureItemEffect extends activemagiceffect const
 {Makes a worn item legendary (F4SE required). If no worn items have a legendary attach point, can optionally create a new legendary item to add to the target's inventory instead.}
 
-StuffOfLegend:WornLegendaryItemQuest Property WornLegendaryItemQuest Auto Const Mandatory
+StuffOfLegend:LegendaryCreatureItemQuest Property LegendaryCreatureItemQuest Auto Const Mandatory
 {AUTOFILL}
 
 FormList Property AllowedWeaponKeywords Auto Const Mandatory
@@ -17,7 +17,7 @@ FormList Property AlwaysAllowedKeywordsList Auto Const Mandatory
 {Any items with keywords on this list are always allowed, even if they have a keyword on the excluded list}
 
 Event OnEffectStart(Actor akTarget, Actor akCaster)
-    WornLegendaryItemQuest.CreateLegendaryItems(akTarget, GetEligibleInventoryItems(akTarget, AllowedWeaponKeywords), GetEligibleInventoryItems(akTarget, AllowedArmorKeywords))
+    LegendaryCreatureItemQuest.CreateLegendaryItems(akTarget, GetEligibleInventoryItems(akTarget, AllowedWeaponKeywords), GetEligibleInventoryItems(akTarget, AllowedArmorKeywords))
 EndEvent
 
 Form[] Function GetEligibleInventoryItems(Actor akActor, FormList akAllowedKeywords)

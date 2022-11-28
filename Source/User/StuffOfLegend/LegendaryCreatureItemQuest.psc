@@ -1,4 +1,4 @@
-Scriptname StuffOfLegend:WornLegendaryItemQuest extends Quest
+Scriptname StuffOfLegend:LegendaryCreatureItemQuest extends Quest
 
 LegendaryItemQuestScript Property LegendaryItemQuest Auto Const Mandatory
 

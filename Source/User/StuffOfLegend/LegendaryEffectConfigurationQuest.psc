@@ -10,7 +10,7 @@ EndStruct
 LegendaryItemQuestScript Property LegendaryItemQuest const auto mandatory
 {Autofill}
 
-StuffOfLegend:WornLegendaryItemQuest Property WornLegendaryItemQuest Const Auto Mandatory
+StuffOfLegend:LegendaryCreatureItemQuest Property LegendaryCreatureItemQuest Const Auto Mandatory
 
 ; Weapons
 bool Property LuckyWeaponEnabled = true Auto
@@ -422,7 +422,7 @@ Function UpdateArmorModEnabled(string asName, bool abEnabled, LegendaryItemQuest
 	UpdateModRule(asName, abEnabled, akRule)
 
 	if akItem
-		UpdateModItem(asName, abEnabled, akItem, WornLegendaryItemQuest.LegendaryArmorModDropList)
+		UpdateModItem(asName, abEnabled, akItem, LegendaryCreatureItemQuest.LegendaryArmorModDropList)
 	EndIf
 EndFunction
 
@@ -430,19 +430,19 @@ Function UpdateWeaponModEnabled(string asName, bool abEnabled, LegendaryItemQues
 	UpdateModRule(asName, abEnabled, akRule)
 
 	if akItem
-		UpdateModItem(asName, abEnabled, akItem, WornLegendaryItemQuest.LegendaryWeaponModDropList)
+		UpdateModItem(asName, abEnabled, akItem, LegendaryCreatureItemQuest.LegendaryWeaponModDropList)
 	EndIf
 EndFunction
 
 Function UpdateFarHarborArmorModEnabled(string asName, bool abEnabled, ExternalLegendaryModRule akRule, MiscObject akItem)
 	if UpdateFarHarborModRule(asName, abEnabled, akRule) && akItem
-		UpdateModItem(asName, abEnabled, akItem, WornLegendaryItemQuest.LegendaryArmorModDropList)
+		UpdateModItem(asName, abEnabled, akItem, LegendaryCreatureItemQuest.LegendaryArmorModDropList)
 	EndIf
 EndFunction
 
 Function UpdateFarHarborWeaponModEnabled(string asName, bool abEnabled, ExternalLegendaryModRule akRule, MiscObject akItem)
 	if UpdateFarHarborModRule(asName, abEnabled, akRule) && akItem
-		UpdateModItem(asName, abEnabled, akItem, WornLegendaryItemQuest.LegendaryWeaponModDropList)
+		UpdateModItem(asName, abEnabled, akItem, LegendaryCreatureItemQuest.LegendaryWeaponModDropList)
 	EndIf
 EndFunction
 
