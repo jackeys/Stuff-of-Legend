@@ -19,6 +19,11 @@ Form[] Property LegendaryWeaponModDropList Auto
 Form[] Property LegendaryArmorModDropList Auto
 {An array of all of the possible legendary mods that can be dropped by the ActorKeywords_DropType_Mod category of enemy. This is maintained as an array to allow for cycling instead of fully random selection.}
 
+FormList Property LegendaryWeaponModDropFormList Auto Const Mandatory
+{An alternative list of possible legendary mods that can be dropped by the ActorKeywords_DropType_Mod category of enemy. This is used in combination with the array. This is slower but works better for integrating external mods since the form can be found using a script.}
+
+FormList Property LegendaryArmorModDropFormList Auto Const Mandatory
+{An alternative list of possible legendary mods that can be dropped by the ActorKeywords_DropType_Mod category of enemy. This is used in combination with the array. This is slower but works better for integrating external mods since the form can be found using a script.}
 
 Struct LegendaryDropMapping
 	FormList ActorKeywords
@@ -329,36 +334,56 @@ ObjectReference Function GenerateLegendaryItem(ObjectReference ObjectToSpawnIn)
 	return None
 EndFunction
 
+int DEFAULT_MAX_ARRAY_SIZE = 128
 Form Function GetRandomLegendaryModItem()
     Form[] PreferredDrops = new Form[0]
-	Form[] LegendaryModDropList
+	Form[] InternalLegendaryModItems
+	FormList ExternalLegendaryModItems
 	Form[] PreviouslyDroppedLegendaryMods
 
 	if Utility.RandomInt(1, 100) <= LegendaryWeaponChance.GetValueInt()
 		; Choose a weapon mod
-		LegendaryModDropList = LegendaryWeaponModDropList
+		InternalLegendaryModItems = LegendaryWeaponModDropList
+		ExternalLegendaryModItems = LegendaryWeaponModDropFormList
 		PreviouslyDroppedLegendaryMods = PreviouslyDroppedLegendaryWeaponMods
 	else
 		; Choose an armor mod
-		LegendaryModDropList = LegendaryArmorModDropList
+		InternalLegendaryModItems = LegendaryArmorModDropList
+		ExternalLegendaryModItems = LegendaryArmorModDropFormList
 		PreviouslyDroppedLegendaryMods = PreviouslyDroppedLegendaryArmorMods
 	EndIf
 
-	;FIND THE MODS WE HAVEN'T SPAWNED RECENTLY
+	; If we already found everything, restart
+	if PreviouslyDroppedLegendaryMods.length >= InternalLegendaryModItems.length + ExternalLegendaryModItems.GetSize() || PreviouslyDroppedLegendaryMods.length >= DEFAULT_MAX_ARRAY_SIZE
+		debug.trace(self + " Previously dropped mod items list is at the maximum size, resetting")
+		PreviouslyDroppedLegendaryMods.clear()
+	endif
+
+	; Compile the list of all internal and external mods that we haven't recently dropped
 	int i = 0
-	while (i < LegendaryModDropList.length)
-		if  PreviouslyDroppedLegendaryMods.Find(LegendaryModDropList[i]) < 0  ;not found
-			PreferredDrops.add(LegendaryModDropList[i])
+	while (i < InternalLegendaryModItems.length)
+		if  PreviouslyDroppedLegendaryMods.Find(InternalLegendaryModItems[i]) < 0  ;not found
+			PreferredDrops.add(InternalLegendaryModItems[i])
 		endif
 
 		i += 1
 	endwhile
-	
-	;if we don't have anything to pick from, reset and pick from any 
-	if PreferredDrops.length == 0 && LegendaryModDropList.length > 0
+
+	i = 0
+	while (i < ExternalLegendaryModItems.GetSize())
+		if  PreviouslyDroppedLegendaryMods.Find(ExternalLegendaryModItems.GetAt(i)) < 0  ;not found
+			PreferredDrops.add(ExternalLegendaryModItems.GetAt(i))
+		endif
+
+		i += 1
+	endwhile
+
+	; Unless we have duplicates in the internal and external lists, this shouldn't happen
+	if PreferredDrops.length == 0
 		debug.trace(self + " Couldn't find any preferable mod drops, clearing the list")
-		PreviouslyDroppedLegendaryMods.clear() 
-		PreferredDrops = LegendaryModDropList
+		PreviouslyDroppedLegendaryMods.clear()
+		; For simplicity, we are just going to use the internal list - external items will be added on the next pass
+		PreferredDrops = InternalLegendaryModItems
 	endif
 
 	int max = PreferredDrops.Length
@@ -369,7 +394,7 @@ Form Function GetRandomLegendaryModItem()
 		return legendaryMod
 	endIf
 		
-	debug.trace(self + " couldn't find any legendary mods for the enemy to drop from " + LegendaryModDropList)
+	debug.trace(self + " couldn't find any legendary mods for the enemy to drop from " + InternalLegendaryModItems + " and " + ExternalLegendaryModItems)
 	return None
 EndFunction
 
