@@ -36,15 +36,6 @@
             "text": "<ol><li><b>Equipment</b> settings affect enemies who carry their own weapons and armor.</li><li><b>Containers</b> settings affect boss trunks and safes that can contain legendary items.</li><li><b>Effects</b> settings affect all places standard legendary effects are used. This includes legendary items in containers and used by people, trinkets from ghouls, and legendary mods from robots.</li></ol>",
             "type": "text",
             "html": true
-        },
-        {
-            "text": "Legendary Enemies",
-            "type": "section"
-        },
-        {
-            "text": "Stuff of Legend changes the items provided by legendary enemies based on their types.<br><ol><li>Enemies with weapons and armor will have a piece of their existing <b>equipment</b> turned into a legendary item</li><li>Feral ghouls will drop an irradiated <b>trinket</b> with a legendary armor effect</li><li>Robots will drop a <b>legendary mod</b>, a one-time use mod to add a legendary effect to an existing weapon or armor piece</li><li>Animals and bugs will drop <b>mutated organs</b>, food items that grant a long-lasting special effect</li></ol>",
-            "type": "text",
-            "html": true
         }
     ],
     "pages": [
