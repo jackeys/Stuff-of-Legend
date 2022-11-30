@@ -4,9 +4,13 @@
     "minMcmVersion": 2,
     "content": [
         {
+            "text": "Global Settings",
+            "type": "section"
+        },
+        {
             "text": "Legendary Weapon Chance (Instead of Armor)",
             "type": "slider",
-            "help": "The percent chance that a legendary item or mod will be a weapon instead of armor. Does not affect trunks.",
+            "help": "The percent chance that a legendary item or mod will be a weapon instead of armor. Does not affect containers.",
             "valueOptions": {
                 "min": 0,
                 "max": 100,
@@ -23,9 +27,217 @@
                 "sourceType": "GlobalValue",
                 "sourceForm": "Stuff of Legend.esp|001"
             }
+        },
+        {
+            "text": "Settings Sections",
+            "type": "section"
+        },
+        {
+            "text": "<ol><li><b>Equipment</b> settings affect enemies who carry their own weapons and armor.</li><li><b>Containers</b> settings affect boss trunks and safes that can contain legendary items.</li><li><b>Effects</b> settings affect all places standard legendary effects are used. This includes legendary items in containers and used by people, trinkets from ghouls, and legendary mods from robots.</li></ol>",
+            "type": "text",
+            "html": true
+        },
+        {
+            "text": "Legendary Enemies",
+            "type": "section"
+        },
+        {
+            "text": "Stuff of Legend changes the items provided by legendary enemies based on their types.<br><ol><li>Enemies with weapons and armor will have a piece of their existing <b>equipment</b> turned into a legendary item</li><li>Feral ghouls will drop an irradiated <b>trinket</b> with a legendary armor effect</li><li>Robots will drop a <b>legendary mod</b>, a one-time use mod to add a legendary effect to an existing weapon or armor piece</li><li>Animals and bugs will drop <b>mutated organs</b>, food items that grant a long-lasting special effect</li></ol>",
+            "type": "text",
+            "html": true
         }
     ],
     "pages": [
+        {
+            "pageDisplayName": "Equipment",
+            "content": [
+                {
+                    "text": "Chance of adding a new legendary weapon",
+                    "type": "slider",
+                    "help": "The percent chance that if the enemy's weapon is going to be made legendary, it will be a new weapon from the legendary leveled lists",
+                    "valueOptions": {
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|006"
+                    }
+                },
+                {
+                    "text": "Chance of adding a new legendary armor piece",
+                    "type": "slider",
+                    "help": "The percent chance that if the enemy's armor is going to be made legendary, it will be new armor from the legendary leveled lists",
+                    "valueOptions": {
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|007"
+                    }
+                },
+                {
+                    "text": "Strictly enforce legendary weapon chance",
+                    "type": "switcher",
+                    "help": "If an equipped weapon should be made legendary but none are eligible, generate a new one instead of making legendary armor",
+                    "valueOptions": {
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|009"
+                    }
+                },
+                {
+                    "text": "Eligible Equipment",
+                    "type": "section"
+                },
+                {
+                    "text": "Enemies are able to wear more types of equipment than can normally become legendary. By default, this equipment will never be made legendary, but these settings allow you to make them eligible. Note that many of these items likely do not have naming rules for legendary effects, so you will have to read their description to know what the effect does.",
+                    "type": "text"
+                },
+                {
+                    "text": "Clothing",
+                    "type": "switcher",
+                    "help": "Anything that can be upgraded with ballistic weave. May overlap with some of the other categories.",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|00C",
+                        "propertyName": "ClothingEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Headgear",
+                    "type": "switcher",
+                    "help": "Mostly helmets and gas masks, but includes a few hats and hoods (Keyword: ArmorBodyPartHead)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|00C",
+                        "propertyName": "HeadgearEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Hats",
+                    "type": "switcher",
+                    "help": "Standard cloth hats (Keyword: ArmorTypeHat)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|00C",
+                        "propertyName": "HatEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Goggles",
+                    "type": "switcher",
+                    "help": "(Keyword: ArmorBodyPartEyes)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|00C",
+                        "propertyName": "EyewearEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Dog Armor and Bandanas",
+                    "type": "switcher",
+                    "help": "Includes clothing exclusive to dogs as well as bandanas (Keyword: ClothingDogmeat)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|00C",
+                        "propertyName": "DogArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
+                    "text": "Power Armor to the People Not Detected",
+                    "type": "switcher",
+                    "help": "The Power Armor setting shouldn't be used if PAttP is detected",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|00C",
+                        "propertyName": "PAttPNotDetected"
+                    },
+                    "groupCondition": 99,
+                    "groupControl": 1
+                },
+                {
+                    "text": "Power Armor",
+                    "type": "switcher",
+                    "help": "Do not use if using Power Armor to the People - change the Legendary Effects in that mod's settings",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|00C",
+                        "propertyName": "PowerArmorEnabled"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    },
+                    "groupCondition": 1
+                }
+            ]
+        },
+        {
+            "pageDisplayName": "Containers",
+            "content": [
+                {
+                    "text": "Boss Trunk Legendary Chance",
+                    "type": "slider",
+                    "help": "The percent chance that a boss trunk will contain a legendary item",
+                    "valueOptions": {
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|00E"
+                    }
+                },
+                {
+                    "text": "Master Locked Safe Legendary Chance",
+                    "type": "slider",
+                    "help": "The percent chance that a safe with a Master lock will contain a legendary item",
+                    "valueOptions": {
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|00F"
+                    }
+                },
+                {
+                    "text": "Expert Locked Safe Legendary Chance",
+                    "type": "slider",
+                    "help": "The percent chance that a safe with an Expert lock will contain a legendary item",
+                    "valueOptions": {
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|010"
+                    }
+                }
+            ]
+        },
         {
             "pageDisplayName": "Effects - Armor",
             "content": [
@@ -1293,196 +1505,6 @@
                         "type": "CallFunction",
                         "form": "Stuff of Legend.esp|152",
                         "function": "UpdateLegendaryModRules"
-                    }
-                }
-            ]
-        },
-        {
-            "pageDisplayName": "Equipment",
-            "content": [
-                {
-                    "text": "Chance of adding a new legendary weapon",
-                    "type": "slider",
-                    "help": "The percent chance that if the enemy's weapon is going to be made legendary, it will be a new weapon from the legendary leveled lists",
-                    "valueOptions": {
-                        "min": 0,
-                        "max": 100,
-                        "step": 1,
-                        "sourceType": "GlobalValue",
-                        "sourceForm": "Stuff of Legend.esp|006"
-                    }
-                },
-                {
-                    "text": "Chance of adding a new legendary armor piece",
-                    "type": "slider",
-                    "help": "The percent chance that if the enemy's armor is going to be made legendary, it will be new armor from the legendary leveled lists",
-                    "valueOptions": {
-                        "min": 0,
-                        "max": 100,
-                        "step": 1,
-                        "sourceType": "GlobalValue",
-                        "sourceForm": "Stuff of Legend.esp|007"
-                    }
-                },
-                {
-                    "text": "Strictly enforce legendary weapon chance",
-                    "type": "switcher",
-                    "help": "If an equipped weapon should be made legendary but none are eligible, generate a new one instead of making legendary armor",
-                    "valueOptions": {
-                        "sourceType": "GlobalValue",
-                        "sourceForm": "Stuff of Legend.esp|009"
-                    }
-                },
-                {
-                    "text": "Eligible Equipment",
-                    "type": "section"
-                },
-                {
-                    "text": "Enemies are able to wear more types of equipment than can normally become legendary. By default, this equipment will never be made legendary, but these settings allow you to make them eligible. Note that many of these items likely do not have naming rules for legendary effects, so you will have to read their description to know what the effect does.",
-                    "type": "text"
-                },
-                {
-                    "text": "Clothing",
-                    "type": "switcher",
-                    "help": "Anything that can be upgraded with ballistic weave. May overlap with some of the other categories.",
-                    "valueOptions": {
-                        "sourceType": "PropertyValueBool",
-                        "sourceForm": "Stuff of Legend.esp|00C",
-                        "propertyName": "ClothingEnabled"
-                    },
-                    "action": {
-                        "type": "CallFunction",
-                        "form": "Stuff of Legend.esp|00C",
-                        "function": "RefreshAllowedKeywords"
-                    }
-                },
-                {
-                    "text": "Headgear",
-                    "type": "switcher",
-                    "help": "Mostly helmets and gas masks, but includes a few hats and hoods (Keyword: ArmorBodyPartHead)",
-                    "valueOptions": {
-                        "sourceType": "PropertyValueBool",
-                        "sourceForm": "Stuff of Legend.esp|00C",
-                        "propertyName": "HeadgearEnabled"
-                    },
-                    "action": {
-                        "type": "CallFunction",
-                        "form": "Stuff of Legend.esp|00C",
-                        "function": "RefreshAllowedKeywords"
-                    }
-                },
-                {
-                    "text": "Hats",
-                    "type": "switcher",
-                    "help": "Standard cloth hats (Keyword: ArmorTypeHat)",
-                    "valueOptions": {
-                        "sourceType": "PropertyValueBool",
-                        "sourceForm": "Stuff of Legend.esp|00C",
-                        "propertyName": "HatEnabled"
-                    },
-                    "action": {
-                        "type": "CallFunction",
-                        "form": "Stuff of Legend.esp|00C",
-                        "function": "RefreshAllowedKeywords"
-                    }
-                },
-                {
-                    "text": "Goggles",
-                    "type": "switcher",
-                    "help": "(Keyword: ArmorBodyPartEyes)",
-                    "valueOptions": {
-                        "sourceType": "PropertyValueBool",
-                        "sourceForm": "Stuff of Legend.esp|00C",
-                        "propertyName": "EyewearEnabled"
-                    },
-                    "action": {
-                        "type": "CallFunction",
-                        "form": "Stuff of Legend.esp|00C",
-                        "function": "RefreshAllowedKeywords"
-                    }
-                },
-                {
-                    "text": "Dog Armor and Bandanas",
-                    "type": "switcher",
-                    "help": "Includes clothing exclusive to dogs as well as bandanas (Keyword: ClothingDogmeat)",
-                    "valueOptions": {
-                        "sourceType": "PropertyValueBool",
-                        "sourceForm": "Stuff of Legend.esp|00C",
-                        "propertyName": "DogArmorEnabled"
-                    },
-                    "action": {
-                        "type": "CallFunction",
-                        "form": "Stuff of Legend.esp|00C",
-                        "function": "RefreshAllowedKeywords"
-                    }
-                },
-                {
-                    "text": "Power Armor to the People Not Detected",
-                    "type": "switcher",
-                    "help": "The Power Armor setting shouldn't be used if PAttP is detected",
-                    "valueOptions": {
-                        "sourceType": "PropertyValueBool",
-                        "sourceForm": "Stuff of Legend.esp|00C",
-                        "propertyName": "PAttPNotDetected"
-                    },
-                    "groupCondition": 99,
-                    "groupControl": 1
-                },
-                {
-                    "text": "Power Armor",
-                    "type": "switcher",
-                    "help": "Do not use if using Power Armor to the People - change the Legendary Effects in that mod's settings",
-                    "valueOptions": {
-                        "sourceType": "PropertyValueBool",
-                        "sourceForm": "Stuff of Legend.esp|00C",
-                        "propertyName": "PowerArmorEnabled"
-                    },
-                    "action": {
-                        "type": "CallFunction",
-                        "form": "Stuff of Legend.esp|00C",
-                        "function": "RefreshAllowedKeywords"
-                    },
-                    "groupCondition": 1
-                }
-            ]
-        },
-        {
-            "pageDisplayName": "Containers",
-            "content": [
-                {
-                    "text": "Boss Trunk Legendary Chance",
-                    "type": "slider",
-                    "help": "The percent chance that a boss trunk will contain a legendary item",
-                    "valueOptions": {
-                        "min": 0,
-                        "max": 100,
-                        "step": 1,
-                        "sourceType": "GlobalValue",
-                        "sourceForm": "Stuff of Legend.esp|00E"
-                    }
-                },
-                {
-                    "text": "Master Locked Safe Legendary Chance",
-                    "type": "slider",
-                    "help": "The percent chance that a safe with a Master lock will contain a legendary item",
-                    "valueOptions": {
-                        "min": 0,
-                        "max": 100,
-                        "step": 1,
-                        "sourceType": "GlobalValue",
-                        "sourceForm": "Stuff of Legend.esp|00F"
-                    }
-                },
-                {
-                    "text": "Expert Locked Safe Legendary Chance",
-                    "type": "slider",
-                    "help": "The percent chance that a safe with an Expert lock will contain a legendary item",
-                    "valueOptions": {
-                        "min": 0,
-                        "max": 100,
-                        "step": 1,
-                        "sourceType": "GlobalValue",
-                        "sourceForm": "Stuff of Legend.esp|010"
                     }
                 }
             ]
