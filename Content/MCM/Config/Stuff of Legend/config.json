@@ -235,6 +235,19 @@
                         "sourceType": "GlobalValue",
                         "sourceForm": "Stuff of Legend.esp|010"
                     }
+                },
+                {
+                    "text": "Minimum Player Level for Legendary Items",
+                    "type": "slider",
+                    "help": "Containers can't have legendary items until the player reaches this level",
+                    "valueOptions": {
+                        "min": 1,
+                        "max": 50,
+                        "step": 1,
+                        "sourceType": "PropertyValueInt",
+                        "sourceForm": "Stuff of Legend.esp|155",
+                        "propertyName": "MinimumPlayerLevel"
+                    }
                 }
             ]
         },

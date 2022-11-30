@@ -11,6 +11,9 @@ LegendaryChance Property LockExpertChanceLegendaryChance Auto Mandatory
 LegendaryChance Property LockMasterChanceLegendaryChance Auto Mandatory
 {If the container uses lock levels, a Master lock has this chance that a legendary item will be added}
 
+int Property MinimumPlayerLevel = 6 Auto
+{If the player isn't at least this level, no legendary items will spawn}
+
 Struct LegendaryChance
     GlobalVariable PercentChance
     int ConsecutiveNoItemCount = 0
@@ -41,6 +44,10 @@ bool Function HasBeenTooLongSinceLastItem(LegendaryChance akChance)
 EndFunction
 
 Function AddLegendaryItemToContainer(StuffOfLegend:LegendaryContainer akContainer, LeveledItem akEligibleItems = None)
+        if Game.GetPlayer().GetLevel() < MinimumPlayerLevel
+            return
+        endIf
+
         if akContainer.UseLockLevelChances
             ; Master
 	        if(akContainer.getLockLevel() >= 100)
