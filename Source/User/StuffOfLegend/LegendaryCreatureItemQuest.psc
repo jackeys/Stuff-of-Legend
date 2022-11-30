@@ -58,6 +58,9 @@ GlobalVariable Property GenerateNewItemIfNoneFound Auto Const Mandatory
 GlobalVariable Property StrictlyEnforceWeaponChanceWhenEquipmentAvailable Auto Const Mandatory
 {This boolean global variable indicates if a weapon should be generated if the weapon chance selected a weapon, even if armor is available}
 
+GlobalVariable Property StrictlyEnforceArmorChanceWhenEquipmentAvailable Auto Const Mandatory
+{This boolean global variable indicates if a armor should be generated if the armor chance selected a armor, even if a weapon is available}
+
 GlobalVariable Property MaxItemsMade_Legendary Auto Const Mandatory
 {The upper bound for the number of legendary items that will be created. Must be at least 1}
 
@@ -225,7 +228,7 @@ Function MakeEquippedItemLegendary(Actor akTarget, Form[] aaEligibleWeapons, For
         success = CreateLegendaryArmor(akTarget, aaEligibleArmor)
         
         if !success
-            if StrictlyEnforceWeaponChanceWhenEquipmentAvailable.GetValueInt() > 0
+            if StrictlyEnforceArmorChanceWhenEquipmentAvailable.GetValueInt() > 0
                 debug.trace(self + " generating new legendary armor because converting equipped armor failed")
                 LegendaryItemQuest.GenerateLegendaryItem(akTarget, GeneratedArmor)
                 success = true

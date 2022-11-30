@@ -76,6 +76,15 @@
                     }
                 },
                 {
+                    "text": "Strictly enforce legendary armor chance",
+                    "type": "switcher",
+                    "help": "If an equipped armor piece should be made legendary but none are eligible, generate a new one instead of making a legendary weapon",
+                    "valueOptions": {
+                        "sourceType": "GlobalValue",
+                        "sourceForm": "Stuff of Legend.esp|00D"
+                    }
+                },
+                {
                     "text": "Eligible Equipment",
                     "type": "section"
                 },
