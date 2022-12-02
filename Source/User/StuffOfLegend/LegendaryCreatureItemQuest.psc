@@ -70,6 +70,9 @@ GlobalVariable Property MaxItemsMade_Normal Auto Const Mandatory
 Keyword Property EncTypeLegendary Auto Const Mandatory
 {AUTOFILL}
 
+ActorValue Property SpawnedLegendaryItem const auto
+{AUTOFILL used as a "do once" for spawning without having to have the spawning script store a variable}
+
 bool Property DogArmorEnabled = false Auto
 Keyword Property DogArmorKeyword Const Auto Mandatory
 
@@ -206,6 +209,9 @@ Function CreateLegendaryItems(Actor akTarget, Form[] aaEligibleWeapons, Form[] a
 
         i += 1
     endWhile
+
+	; Make sure we don't try to generate legendaries again for this actor
+	akTarget.SetValue(SpawnedLegendaryItem, 1)
 EndFunction
 
 Function MakeEquippedItemLegendary(Actor akTarget, Form[] aaEligibleWeapons, Form[] aaEligibleArmor)
