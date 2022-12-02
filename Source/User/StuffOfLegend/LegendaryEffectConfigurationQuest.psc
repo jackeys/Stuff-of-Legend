@@ -328,7 +328,7 @@ bool Property FHRadPoweredArmorEnabled = true Auto
 ExternalLegendaryModRule Property FHRadPoweredArmorModRule Const Auto Mandatory
 MiscObject Property FHRadPoweredArmorModItem Const Auto
 
-Event OnInit()
+Event OnQuestInit()
     UpdateLegendaryModRules()
 EndEvent
 
