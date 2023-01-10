@@ -194,6 +194,12 @@ Function UpdateFormList(bool abEnabled, FormList akList, Form akKeyword)
 EndFunction
 
 Function CreateLegendaryItems(Actor akTarget, Form[] aaEligibleWeapons, Form[] aaEligibleArmor)
+	if akTarget.GetValue(SpawnedLegendaryItem) > 0
+		; We already spawned legendary items - don't do it again
+		debug.trace(self + " is not creating legendaries for " + akTarget + " because they already spawnd legendaries")
+		return
+	endIf
+
     bool hasEquipment = aaEligibleWeapons.Length > 0 || aaEligibleArmor.Length > 0
     int numLegendaries = GetNumberOfLegendariesToCreate(akTarget)
     int i = 0
