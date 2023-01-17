@@ -93,6 +93,21 @@
                     "type": "text"
                 },
                 {
+                    "text": "Allow Items the Player Cannot Equip",
+                    "type": "switcher",
+                    "help": "Could be of any type, but usually represents armor worn by super mutants or dogs (Keyword: PlayerCannotEquip)",
+                    "valueOptions": {
+                        "sourceType": "PropertyValueBool",
+                        "sourceForm": "Stuff of Legend.esp|00C",
+                        "propertyName": "AllowPlayerCannotEquip"
+                    },
+                    "action": {
+                        "type": "CallFunction",
+                        "form": "Stuff of Legend.esp|00C",
+                        "function": "RefreshAllowedKeywords"
+                    }
+                },
+                {
                     "text": "Clothing",
                     "type": "switcher",
                     "help": "Anything that can be upgraded with ballistic weave. May overlap with some of the other categories.",

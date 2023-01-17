@@ -73,6 +73,9 @@ Keyword Property EncTypeLegendary Auto Const Mandatory
 ActorValue Property SpawnedLegendaryItem const auto
 {AUTOFILL used as a "do once" for spawning without having to have the spawning script store a variable}
 
+bool Property AllowPlayerCannotEquip = false Auto
+Keyword Property PlayerCannotEquipKeyword Const Auto Mandatory
+
 bool Property DogArmorEnabled = false Auto
 Keyword Property DogArmorKeyword Const Auto Mandatory
 
@@ -127,6 +130,7 @@ EndFunction
 Function RefreshAllowedKeywords()
     DetectOtherMods()
     
+	UpdateFormList(!AllowPlayerCannotEquip, WLI_FormList_IneligibleKeywords, PlayerCannotEquipKeyword)
     UpdateFormList(DogArmorEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, DogArmorKeyword)
     UpdateFormList(HeadgearEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, HeadgearKeyword)
     UpdateFormList(ClothingEnabled, LegendaryModRule_AllowedKeywords_ObjectTypeArmor, ClothingKeyword)
