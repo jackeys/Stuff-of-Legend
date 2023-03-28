@@ -328,8 +328,16 @@ bool Property FHRadPoweredArmorEnabled = true Auto
 ExternalLegendaryModRule Property FHRadPoweredArmorModRule Const Auto Mandatory
 MiscObject Property FHRadPoweredArmorModItem Const Auto
 
+bool Property HasRunBefore = true auto
+{Whether the rules updates have been run before. Start at true because the first release didn't have this, so we'll set it to false when we init the quest.}
+
+Event OnInit()
+	HasRunBefore = false
+EndEvent
+
 Event OnQuestInit()
     UpdateLegendaryModRules()
+	HasRunBefore = true
 EndEvent
 
 Function UpdateLegendaryModRules()
@@ -485,7 +493,13 @@ Function UpdateModRule(string asName, bool abEnabled, LegendaryItemQuestScript:L
 	int index = FindLegendaryRule(akRule)
 	if abEnabled
 		if index >= 0
-			debug.trace(self + " No action needed - found enabled rule " + asName + " at index " + index)
+			; Check to see if the mod rule is out of date
+			if LegendaryItemQuest.LegendaryModRules[index].DisallowedKeywords == akRule.DisallowedKeywords && LegendaryItemQuest.LegendaryModRules[index].AllowGrenades == akRule.AllowGrenades
+				debug.trace(self + " No action needed - found enabled rule " + asName + " at index " + index)
+			else
+				debug.trace(self + " Enabled rule " + asName + " at index " + index + " is out of date - updating")
+				LegendaryItemQuest.LegendaryModRules[index] = akRule
+			endif
 		else
 			debug.trace(self + " Adding enabled legendary " + asName + " | Rule: " + akRule)
 			LegendaryItemQuest.LegendaryModRules.add(akRule)
@@ -504,7 +518,7 @@ int Function FindLegendaryRule(LegendaryItemQuestScript:LegendaryModRule akRule)
 	; Look for the rule using the object mod, then double-check the other fields to make sure it actually matches
 	int index = LegendaryItemQuest.LegendaryModRules.RFindStruct("LegendaryObjectMod", akRule.LegendaryObjectMod)
 	
-	while index > -1 && (LegendaryItemQuest.LegendaryModRules[index].AllowedKeywords != akRule.AllowedKeywords || LegendaryItemQuest.LegendaryModRules[index].DisallowedKeywords != akRule.DisallowedKeywords)
+	while index > -1 && LegendaryItemQuest.LegendaryModRules[index].AllowedKeywords != akRule.AllowedKeywords
 		if index > 0
 			index = LegendaryItemQuest.LegendaryModRules.RFindStruct("LegendaryObjectMod", akRule.LegendaryObjectMod, index - 1)
 		else
